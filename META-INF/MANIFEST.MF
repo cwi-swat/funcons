@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: funcons
+Bundle-SymbolicName: funcons
+Bundle-Version: 1.0.0.qualifier
+Require-Bundle: org.eclipse.imp.pdb.values,
+ rascal
