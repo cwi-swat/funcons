@@ -14,8 +14,8 @@ syntax Alternative
 	| sort: Sort sort;
 
 syntax Item
-	= \aliasSort: "Alias:" Sort sort // sort and name closely related?
-	| \aliasName: "Alias:" Name name
+	= aliasSort: "Alias:" Sort sort // sort and name closely related?
+	| aliasName: "Alias:" Name name
 	| glossay: "Glossary:" Text+ text
 	| uses: "Uses:" {Notation ","}+ notations
 	| local: "Local:" {Definition ","}+ definitions
@@ -30,3 +30,25 @@ syntax Text
 syntax Definition
 	= single: Sort lhs "=" Sort rhs
 	| alternative: Sort lhs "=" Sort rhs "\\\\" Alternative alt;
+	
+syntax Part // in sdf only parts alternative may have layout, the others should be lexical
+	= parts: "(" {Part ","}+ parts ")"
+	| variable: Variable variable 
+	| variable: "_" Variable variable "_"
+	| symbol: Symbol symbol
+	| symbol: "_" Symbol symbol "_";
+	
+syntax Computes
+	= computes: "Computes:" {Variable ","}+ vars;
+
+syntax Rule 
+	= basic: Label label Formula formula
+	| complex: Label label {Formula ","}+ formulas Infer infer Formula formula;
+
+syntax Formula
+	= relation: Relation relation
+	| equation: Equation eq
+	| definition: "def" Term term
+	| negation: "not" Formula formula;
+
+	
