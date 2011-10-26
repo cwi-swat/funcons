@@ -14,7 +14,7 @@ syntax Alternative
 	| sort: Sort sort;
 
 syntax Item
-	= \aliasSort: "Alias:"  Sort sort // sort and name closely related?
+	= \aliasSort: "Alias:" Sort sort // sort and name closely related?
 	| \aliasName: "Alias:" Name name
 	| glossay: "Glossary:" Text+ text
 	| uses: "Uses:" {Notation ","}+ notations
@@ -22,3 +22,11 @@ syntax Item
 	| relations: "Relations:" Part+ parts Computes? computes
 	| singleRule: Rule singleRule;
 	
+syntax Text
+	= term: "$" Term term "$"
+	| word: Word w
+	| punctuation: Punctuation p;
+	
+syntax Definition
+	= single: Sort lhs "=" Sort rhs
+	| alternative: Sort lhs "=" Sort rhs "\\\\" Alternative alt;
