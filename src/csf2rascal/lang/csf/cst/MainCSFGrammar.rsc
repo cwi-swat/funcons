@@ -1,5 +1,8 @@
 module csf2rascal::lang::csf::cst::MainCSFGrammar
 
+import lang::std::Layout;
+
+
 start syntax CSF = csf: Notation notations Item* items;
 
 syntax Notation 
@@ -27,6 +30,10 @@ syntax Text
 	| word: Word w
 	| punctuation: Punctuation p;
 	
+lexical Word = [A-Za-z\-]+;
+
+lexical Punctuation = [.,;:\'()];
+	
 syntax Definition
 	= single: Sort lhs "=" Sort rhs
 	| alternative: Sort lhs "=" Sort rhs "\\\\" Alternative alt;
@@ -43,6 +50,8 @@ syntax Computes = computes: "Computes:" {Variable ","}+ vars;
 syntax Rule 
 	= basic: Label label Formula formula
 	| complex: Label label {Formula ","}+ formulas Infer infer Formula formula;
+
+lexical Label = [0-9]+ [:];
 
 syntax Formula
 	= relation: Relation relation
@@ -62,4 +71,25 @@ syntax Atom
 	 | name: Name name
 	 | symbol: Symbol sym
 	 | terms: "(" {Term ","}* terms ")";
+	 
+lexical Constant
+	= [0-9]+ // NatCon from sdf?
+	| [\"][^\"]*[\"]; // StrCon from sdf?
+	 
+lexical Sort = [A-Z] [A-Za-z\-]*;
+
+lexical Name = [a-z] [a-z\-]*;
+
+lexical Reg = [*+?];
+
+lexical Suffix = [0-9]* [\']?;
+
+lexical Variable = Sort sort Reg reg Suffix suffix;
+
+lexical Symbol 
+	= [=\<\>|\-:]+
+	| [=] // reject in sdf??
+	| Infer infer // reject in sdf??
+	;
 	
+lexical Infer = [\-][\-][\-] [\-]*; // prefer in sdf??
