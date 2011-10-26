@@ -38,8 +38,7 @@ syntax Part // in sdf only parts alternative may have layout, the others should 
 	| symbol: Symbol symbol
 	| symbol: "_" Symbol symbol "_";
 	
-syntax Computes
-	= computes: "Computes:" {Variable ","}+ vars;
+syntax Computes = computes: "Computes:" {Variable ","}+ vars;
 
 syntax Rule 
 	= basic: Label label Formula formula
@@ -48,7 +47,19 @@ syntax Rule
 syntax Formula
 	= relation: Relation relation
 	| equation: Equation eq
-	| definition: "def" Term term
-	| negation: "not" Formula formula;
+	| definition: "def" Term term // avoid in sdf??
+	| negation: "not" Formula formula; // avoid in sdf?
+	
+syntax Relation = term: Term term;
 
+syntax Equation = eqation: Term lhs "=" Term rhs;
+	
+syntax Term = term: Atom+ atom;
+
+syntax Atom
+	 = variable: Variable var
+	 | constant: Constant const
+	 | name: Name name
+	 | symbol: Symbol sym
+	 | terms: "(" {Term ","}* terms ")";
 	
