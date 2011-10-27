@@ -2,6 +2,17 @@ module csf2rascal::lang::csf::cst::MainCSFGrammar
 
 import lang::std::Layout;
 
+lexical Sort = [A-Z] [A-Za-z\-]*;
+
+lexical Name = [a-z] [a-z\-]*;
+
+lexical Symbol 
+	= [=\<\>|\-:]+
+	| [=] // reject in sdf??
+	| Infer infer // reject in sdf??
+	;
+	
+lexical Infer = [\-][\-][\-] [\-]*; // prefer in sdf??
 
 start syntax CSF = csf: Notation notations Item* items;
 
@@ -15,6 +26,8 @@ syntax Alternative
 	| nameParams: Name name "(" Sort param Reg multiplier ")"
 	| sortParams: Sort sort "(" Sort param Reg multiplier ")"
 	| sort: Sort sort;
+
+lexical Reg = [*+?];
 
 syntax Item
 	= aliasSort: "Alias:" Sort sort // sort and name closely related?
@@ -44,7 +57,11 @@ syntax Part // in sdf only parts alternative may have layout, the others should 
 	| variable: "_" Variable variable "_"
 	| symbol: Symbol symbol
 	| symbol: "_" Symbol symbol "_";
+
+lexical Variable = Sort sort Reg reg Suffix suffix;
 	
+lexical Suffix = [0-9]* [\']?;
+
 syntax Computes = computes: "Computes:" {Variable ","}+ vars;
 
 syntax Rule 
@@ -88,22 +105,3 @@ lexical StrChars
 	| decimal: [\\] [0-9] a [0-9] b [0-9] c
 	| normal: ![\0-\31 \n \t \" \\]
 	;
-	 //| [\"][^\"]*[\"]; // StrCon from sdf?
-	 
-lexical Sort = [A-Z] [A-Za-z\-]*;
-
-lexical Name = [a-z] [a-z\-]*;
-
-lexical Reg = [*+?];
-
-lexical Suffix = [0-9]* [\']?;
-
-lexical Variable = Sort sort Reg reg Suffix suffix;
-
-lexical Symbol 
-	= [=\<\>|\-:]+
-	| [=] // reject in sdf??
-	| Infer infer // reject in sdf??
-	;
-	
-lexical Infer = [\-][\-][\-] [\-]*; // prefer in sdf??
