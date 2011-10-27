@@ -1,6 +1,6 @@
 module csf2rascal::lang::csf::cst::MainCSFGrammar
 
-import lang::std::Layout;
+extend lang::std::Layout;
 
 lexical Sort = [A-Z] [A-Za-z\-]* !>> [A-Za-z\-] ;
 
