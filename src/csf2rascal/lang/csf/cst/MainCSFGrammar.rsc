@@ -73,8 +73,22 @@ syntax Atom
 	 | terms: "(" {Term ","}* terms ")";
 	 
 lexical Constant
-	= [0-9]+ // NatCon from sdf?
-	| [\"][^\"]*[\"]; // StrCon from sdf?
+	= natCon: NatCon nat
+	| strCon : StrCon str;
+	
+// NatCon and StrCon from sdf
+lexical NatCon = digits: [0-9]+; 
+
+lexical StrCon = def: [\"] StrChar* chars [\"];
+
+lexical StrChars
+	= newline: [\n]
+	| tab: [\t]
+	| quote: [\\\"]
+	| decimal: [\\] [0-9] a [0-9] b [0-9] c
+	| normal: ![\0-\31 \n \t \" \\]
+	;
+	 //| [\"][^\"]*[\"]; // StrCon from sdf?
 	 
 lexical Sort = [A-Z] [A-Za-z\-]*;
 
