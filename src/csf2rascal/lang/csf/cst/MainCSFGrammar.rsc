@@ -35,7 +35,7 @@ syntax Item
 	| glossay: "Glossary:" Text+ text
 	| uses: "Uses:" {Notation ","}+ notations
 	| local: "Local:" {Definition ","}+ definitions
-	| relations: "Relations:" Part+ parts Computes? computes
+	| relations: "Relation:" Part+ parts Computes? computes
 	| singleRule: Rule singleRule;
 	
 syntax Text
