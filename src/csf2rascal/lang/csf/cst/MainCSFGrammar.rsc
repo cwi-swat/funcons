@@ -58,7 +58,7 @@ syntax Part // in sdf only parts alternative may have layout, the others should 
 	| symbol: Symbol symbol
 	| symbol: "_" Symbol symbol "_";
 
-lexical Variable = Sort sort Reg reg Suffix suffix;
+lexical Variable = Sort sort Reg? reg Suffix suffix;
 	
 lexical Suffix = [0-9]* [\']?;
 
