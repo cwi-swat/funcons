@@ -8,7 +8,7 @@ public start[CSF] parseCSF(str csfString) =
 	parse(#start[CSF], csfString); 
 	
 public start[CSF] parseCSF(loc csfFile) = 
-	parse(#CSF, csfFile); 
+	parse(#start[CSF], csfFile); 
 	
 public void registerIDE() {
 	registerLanguage("The CSF funcons language", "csf", start[CSF] (str s, loc l) {

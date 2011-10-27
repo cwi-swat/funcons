@@ -98,7 +98,7 @@ lexical NatCon = digits: [0-9]+;
 
 lexical StrCon = def: [\"] StrChar* chars [\"];
 
-lexical StrChars
+lexical StrChar
 	= newline: [\n]
 	| tab: [\t]
 	| quote: [\\\"]
