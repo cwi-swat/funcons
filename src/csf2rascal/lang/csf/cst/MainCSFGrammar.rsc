@@ -2,17 +2,17 @@ module csf2rascal::lang::csf::cst::MainCSFGrammar
 
 import lang::std::Layout;
 
-lexical Sort = [A-Z] [A-Za-z\-]*;
+lexical Sort = [A-Z] [A-Za-z\-]* !>> [A-Za-z\-] ;
 
-lexical Name = [a-z] [a-z\-]*;
+lexical Name = [a-z] [a-z\-]* !>> [a-z\-];
 
 lexical Symbol 
-	= [=\<\>|\-:]+
-	| [=] // reject in sdf??
+	= [=\<\>|\-:]+ !>> [=\<\>|\-:]
+	| [=] !>> [=] // reject in sdf??
 	| Infer infer // reject in sdf??
 	;
 	
-lexical Infer = [\-][\-][\-] [\-]*; // prefer in sdf??
+lexical Infer = [\-][\-][\-] [\-]* !>> [\-]; // prefer in sdf??
 
 start syntax CSF = csf: Notation notations Item* items;
 
@@ -43,7 +43,7 @@ syntax Text
 	| word: Word w
 	| punctuation: Punctuation p;
 	
-lexical Word = [A-Za-z\-]+;
+lexical Word = [A-Za-z\-]+ !>> [A-Za-z\-];
 
 lexical Punctuation = [.,;:\'()];
 	
