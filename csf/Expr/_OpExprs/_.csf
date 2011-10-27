@@ -1,0 +1,28 @@
+Expr ::= Op(Expr*)
+
+Alias:  operation-application
+
+Glossary:
+
+The evaluations of the sub-expressions may be interleaved.
+The $Op$ is applied to the resulting sequence.
+
+When $Op$ can be resolved to an $Op'$ of a type applicable to the 
+sequence of sub-expressions, $Op(Expr+)$ has the corresponding result type.
+
+1:      Expr2 --> Expr2'
+        ---
+        Op(Expr*1,Expr2,Expr*3) --> Op(Expr*1,Expr2',Expr*3) %% ambiguous
+
+2:      eval(Op(Data+)) = Data
+        ---
+        Op(Data+) --> Data
+
+3:      not def eval(Op(Data+))
+        ---
+        Op(Data+) --> undefined
+
+%% 4:      Op ==> Op' : op-type(tup-type(Type+),Type),
+%%         Expr+ ==> Expr+' : Type+
+%%         ---
+%%         Op(Expr+) ==> Op'(Expr+') : Type

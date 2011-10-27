@@ -1,0 +1,36 @@
+Expr ::= assign-var(Expr,Expr)
+
+Alias: assign-giving-variable
+
+Glossary:
+
+When $Expr1$ computes a $Var$ and $Expr2$ computes a $Val$,
+$assign-var(Expr1,Expr2)$ assigns $Val$ to $Var$ and gives $Var$.
+
+When $Expr1$ has $var-type(Type1)$ for some $Type1$, 
+and $Expr2$ has some $Type2$ included in $Type1$,
+$assign-var(Expr1,Expr2)$ has $var-type(Type1)$.
+
+(The static semantics rules do not yet specify type inclusion.)
+
+Uses:   Store, Var, Val
+
+Relation:       ( _Expr_ , Store ) _-->_ ( _Expr'_ , Store' )
+
+1:                        Expr1 --> Expr1'
+        ----------------------------------------------------
+        assign-var(Expr1,Expr2) --> assign-var(Expr1',Expr2)
+
+2:                        Expr2 --> Expr2'
+        ----------------------------------------------------
+        assign-var(Expr1,Expr2) --> assign-var(Expr1,Expr2')
+
+3:             Store' = update(Store,Var,Val)
+        -------------------------------------------------
+        ( assign-var(Var,Val), Store ) --> ( Var, Store )
+
+4:             Expr1 ==> Expr1' : var-type(Type),
+               Expr2 ==> Expr2' : Type
+        --------------------------------------
+        assign-var(Expr1,Expr2) ==> 
+        assign-var(Expr1',Expr2') : var-type(Type)

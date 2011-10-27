@@ -1,0 +1,27 @@
+Expr ::= new-var(Expr)
+
+Alias:  new-variable-allocation
+
+Glossary:
+
+When $Expr$ computes a $Type$, $new-var(Expr)$ allocates and
+gives a currently unallocated $Var$.
+
+When $Expr$ evaluates statically to a $Type$ of value, 
+$new-var(Expr)$ has $var-type(Type)$.
+
+Uses: Store, Var, Type
+
+Relation:       ( _Expr_ , Store ) _-->_ ( _Expr'_ , Store' )
+
+1:      Expr --> Expr'
+        ---
+        new-var(Expr) --> new-var(Expr')
+
+2:      allocate(Store,Var,Type) = Store'
+        ---
+        ( new-var(Type), Store ) --> ( Var, Store' )
+
+3:      Expr ==> Type : type
+        ---
+        new-var(Expr) ==> new-var(Expr') : var-type(Type)

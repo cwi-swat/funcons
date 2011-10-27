@@ -1,0 +1,13 @@
+Prog ::= run(Prog)
+
+Glossary:
+
+Executes the code computed by compiling.
+
+Uses:	Prog ::= code(Prog,Type)
+
+1:      Prog --> Prog'
+        ---
+        run(Prog) --> run(Prog')
+
+2:      run(code(Prog,Type)) --> Prog

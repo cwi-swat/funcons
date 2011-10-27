@@ -1,0 +1,19 @@
+Expr ::= tup(Expr*)
+
+Alias:	tuple
+
+Glossary:
+
+The evaluations of the sub-expressions may be interleaved.
+A tuple is formed from the resulting sequence.
+
+When each sub-expression has a (possibly different) type,
+the tuple expression has the tuple type formed from those types.
+
+1:      Expr2 --> Expr2'
+        ---
+        tup(Expr*1,Expr2,Expr*3) --> tup(Expr*1,Expr2',Expr*3) %% ambiguous
+
+%% 2:      Expr* ==> Expr*' : Type*
+%%         ---
+%%         tup(Expr*) ==> tup(Expr*') : tup-type(Type*)

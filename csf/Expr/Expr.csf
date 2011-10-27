@@ -1,0 +1,18 @@
+Expr
+
+Alias:  Expression
+
+Glossary:
+
+The sort of funcon normally computing $Data$, 
+which may include variables, values, types, etc.
+
+Uses:       Expr ::= Data
+
+Relation:   _Expr__-->__Expr'_
+            Computes:   Data
+ 
+Relation:   _Expr__==>__Expr'__:__Type_
+            Computes:   Expr',    Type
+
+%% Relation:   _Expr*__==>__Expr*'__:__Type*_

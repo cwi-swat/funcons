@@ -1,0 +1,34 @@
+Decl ::= seq(Decl*)
+
+Glossary:
+
+The sub-declarations are executed sequentially,
+each in the scope of all the previous declarations.
+The resulting environments are combined, with later
+bindigs overriding earlier ones.
+
+Alias:  sequential
+
+Relation:       Env |- _Decl__-->__Decl'_
+
+1:      Decl --> Decl'
+        ---
+        seq(Decl,Decl*) --> seq(Decl',Decl*)
+
+2:      map-over(Env1,Env0) |- seq(Decl*) --> Decl'
+        ---
+        Env0 |- seq(Env1,Decl*) --> seq(Env1,Decl')
+
+3:      seq(Env1,Env2) --> map-over(Env2,Env1)
+
+4:      seq( ) --> map-empty
+
+
+Relation:       Env |- _Decl__==>__Decl'__:__Env'_
+
+5:      Env0 |- Decl ==> Decl' : Env1,
+        map-over(Env1,Env0) |- seq(Decl*) ==> seq(Decl*') : Env2
+        ---
+        Env0 |- seq(Decl,Decl*) ==> seq(Decl',Decl*') : map-over(Env2,Env1)
+
+6:      seq( ) ==> map-empty : Env

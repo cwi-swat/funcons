@@ -1,0 +1,14 @@
+Prog
+
+Alias:	Program
+
+Glossary:
+
+The sort of funcons that can be executed independently.
+
+Uses:   Prog ::= Data
+
+Relation:       _Prog__-->__Prog'_
+                Computes:   Data
+
+Relation:       _Prog__==>__Prog'__:__Type_

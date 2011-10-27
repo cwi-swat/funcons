@@ -1,0 +1,18 @@
+Decl ::= decl(Comm)
+
+Glossary:
+
+This allows $Comm$ to be executed in a sequence of declarations,
+computing the empty environment.
+
+Alias:  declaration
+
+1:      Comm --> Comm'
+        ---
+        decl(Comm) --> decl(Comm')
+
+2:      decl(skip) --> map-empty
+
+3:      Comm ==> Comm'
+        ---
+        decl(Comm) ==> decl(Comm') : map-empty

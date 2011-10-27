@@ -1,0 +1,22 @@
+Decl ::= bind(Id,Expr)
+
+Glossary:
+
+The computed environment only maps $Id$ to the result of evaluating $Expr$.
+
+The declaration has a type that maps $Id$ to an entity that provides both
+the type of $Expr$ and the static value of $Expr$.
+
+Alias:  bind-result
+
+Uses:   Expr ::= typed(Expr,Type)
+
+1:      Expr --> Expr'
+        ---
+        bind(Id,Expr) --> bind(Id,Expr')
+
+2:      bind(Id,Data) --> map(Id,Data)
+
+%% 3:      Expr ==> Expr' : Type
+%%         ---
+%%         bind(Id,Expr) ==> bind(Id,Expr') : map(Id, typed(Expr',Type))

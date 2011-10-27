@@ -1,0 +1,22 @@
+Expr ::= tup-seq(Expr*)
+
+Alias:	tuple-sequential
+
+Glossary:
+
+The evaluations of the sub-expressions is sequential.
+A tuple is formed from the resulting sequence.
+
+When each sub-expression has a (possibly different) type,
+the tuple expression has the tuple type formed from those types.
+
+
+%% 1:      Expr2 --> Expr2'
+%%         ---
+%%         tup-seq(Data*1,Expr2,Expr*3) --> tup-seq(Data*1,Expr2',Expr*3)
+
+%% 2:      tup-seq(Data*) --> tup(Data*)
+
+%% 3:      Expr* ==> Expr*' : Type*
+%%         ---
+%%         tup-seq(Expr*) ==> tup-seq(Expr*') : tup-type(Type*)

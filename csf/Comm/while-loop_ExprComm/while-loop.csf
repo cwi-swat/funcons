@@ -1,0 +1,21 @@
+Comm ::= while-loop(Expr,Comm)
+
+Glossary:
+
+The loop starts by evaluating $Expr$, then executing $Comm$ if the result 
+is $true$, and terminating normally if it is $false$.
+
+It is well-typed only if $Expr$ is of $bool-type$.
+
+Uses:   Bool,
+        Comm ::= cond(Expr,Comm,Comm),
+        Comm ::= seq(Comm+),
+        Comm ::= skip
+
+1:      while-loop(Expr,Comm) -->
+        cond(Expr, seq(Comm,while-loop(Expr,Comm)), skip) %% ambiguous
+
+2:      Expr ==> Expr' : bool-type,
+        Comm ==> Comm'
+        ---
+        while-loop(Expr,Comm) ==> while-loop(Expr',Comm')

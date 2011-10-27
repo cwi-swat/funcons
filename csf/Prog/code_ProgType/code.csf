@@ -1,0 +1,5 @@
+Prog ::= code(Prog,Type)
+
+Glossary:
+
+The result of a compilation.

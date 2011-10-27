@@ -1,0 +1,20 @@
+Expr ::= bound(Id)
+
+Uses:	Env,
+	Expr ::= typed(Expr,Type)
+
+Relation:       Env |- _Expr__-->__Expr'_
+
+1:      map-lookup(Env,Id) = Data
+        ---
+        Env |- bound(Id) --> Data
+
+2:      not def map-lookup(Env,Id)
+        ---
+        Env |- bound(Id) --> undefined
+
+Relation:       Env |- _Expr__==>__Expr'__:__Type_
+
+3:      %% map-lookup(Env,Id) = typed(Expr,Type) %% Data = Expr not parsed as an EQUATION ???
+        %% ---
+        Env |- bound(Id) ==> bound(Id) : Type

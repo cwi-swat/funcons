@@ -1,0 +1,38 @@
+Expr ::= deref-if-var(Expr)
+
+Alias:  dereference-if-variable
+
+Glossary:
+
+When $Expr$ computes a $Var$, $deref-if-var(Expr)$ 
+deferences $Var$ to compute a $Val$.
+
+When $Expr$ computes a $Non-Var$, 
+$deref-if-var(Expr)$ has the same effect.
+
+When $Expr$ has $var-type(Type)$ for some $Type$, 
+$deref-if-var(Expr)$ is equivalent to $deref(Expr)$ 
+- otherwise it is equivalent to $Expr$.
+
+Uses:   Expr ::= deref(Expr)
+
+Local:  Non-Var = Data \ Var
+
+1:                    Expr --> Expr'
+        ------------------------------------------
+        deref-if-var(Expr) --> deref-if-var(Expr')
+
+2:      deref-if-var(Var) --> deref(Var)
+
+3:      deref-if-var(Non-Var) --> Non-Var
+
+Local:  Non-Var-Type = Type \ var-type(Type)
+
+4:                    Expr ==> Expr' : var-type(Type)
+        ---------------------------------------------
+        deref-if-var(Expr) ==> deref(Expr') : Type
+
+5:                    Expr ==> Expr' : Non-Var-Type
+        -------------------------------------------
+        deref-if-var(Expr) ==> Expr' : Non-Var-Type
+

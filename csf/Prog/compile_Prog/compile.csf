@@ -1,0 +1,7 @@
+Prog ::= compile(Prog)
+
+Uses:   Prog ::= code(Prog,Type)
+
+1:      Prog ==> Prog' : Type
+        ---
+        compile(Prog) --> code(Prog,Type)

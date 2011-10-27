@@ -1,0 +1,27 @@
+Expr ::= deref(Expr)
+
+Alias:  dereference
+
+Glossary:
+
+When $Expr$ computes a $Var$, $deref(Expr)$ computes the $Val$
+currently assigned to $Var$.
+
+When $Expr$ has $var-type(Type)$ for some $Type$, 
+$deref(Expr)$ has $Type$.
+
+Uses:   Store, Var, Val
+
+Relation:       ( _Expr_ , Store ) _-->__Expr'_
+
+1:             Expr --> Expr'
+        ----------------------------
+        deref(Expr) --> deref(Expr')
+
+2:            assigned(Store,Var) = Val
+        ----------------------------------------
+        ( deref(Var), Store ) --> Val
+
+3:             Expr ==> Expr' : var-type(Type)
+        --------------------------------------
+        deref(Expr) ==> deref(Expr') : Type

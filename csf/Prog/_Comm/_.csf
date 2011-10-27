@@ -1,0 +1,19 @@
+Prog ::= Comm
+
+Glossary:
+
+When a $Prog$ is a $Comm$, it does not compute any result.
+
+Uses:	Data
+
+1:      %% Prog = Comm,
+        Comm --> Comm' %% ambiguous
+        ---
+        Prog --> Comm'
+
+2:      skip --> undefined
+
+3:      %% Prog = Comm,
+        Comm ==> Comm'
+        ---
+        Prog ==> Comm' : data-type

@@ -1,0 +1,15 @@
+Decl
+
+Alias:  Declaration
+
+Glossary:
+
+The sort of funcon normally computing an $Env$.
+
+Uses:       Decl ::= Env
+
+Relation:   _Decl__-->__Decl'_
+            Computes:   Env
+ 
+Relation:   _Decl__==>__Decl'__:__Env_
+            Computes:   Decl',    Env

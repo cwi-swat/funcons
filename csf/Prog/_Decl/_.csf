@@ -1,0 +1,15 @@
+Prog ::= Decl
+
+Glossary:
+
+When a $Prog$ is a $Decl$, it computes an $Env$.
+
+1:      %% Prog = Decl,
+        Decl --> Decl' %% ambiguous
+        ---
+        Prog --> Decl'
+
+2:      %% Prog = Decl,
+        Decl ==> Decl' : Env
+        %% ---
+        %% Prog ==> Decl' : Env

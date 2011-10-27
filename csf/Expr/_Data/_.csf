@@ -1,0 +1,7 @@
+Expr ::= Data
+
+Glossary:
+
+A $Data$ entity is an $Expr$ which trivially computes it.
+
+1:   Data ==> Data : data-type

@@ -1,0 +1,5 @@
+Decl ::= Env
+
+Glossary:
+
+An $Env$ is a $Decl$ which trivially computes it.

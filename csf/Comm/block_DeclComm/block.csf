@@ -1,0 +1,29 @@
+Comm ::= block(Decl,Comm)
+
+Alias:  block-scope
+
+Glossary:
+
+The bindings in the $Env$ computed by $Decl$ are local to 
+the block body $Comm$.
+
+Uses:	Env
+
+Relation:       Env |- _Comm__-->__Comm'_
+
+1:      Decl --> Decl'
+        ---
+        block(Decl,Comm) --> block(Decl',Comm)
+
+2:      map-over(Env,Env0) |- Comm --> Comm'
+        ---
+        Env0 |- block(Env,Comm) --> block(Env,Comm)
+
+3:      block(Env,skip) --> skip
+
+Relation:       Env |- _Comm__==>__Comm'_
+
+4:      Decl ==> Decl' : Env,
+        map-over(Env,Env0) |- Comm ==> Comm'
+        ---
+        Env0 |- block(Decl,Comm) ==> block(Decl',Comm')

@@ -1,0 +1,15 @@
+Comm
+
+Alias:  Command
+
+Glossary:
+
+The sort of funcon not normally computing anything.
+
+Uses:       Comm ::= skip
+
+Relation:   _Comm__-->__Comm'_
+%%             Computes:   skip
+ 
+Relation:   _Comm__==>__Comm'_
+            Computes:   Comm'

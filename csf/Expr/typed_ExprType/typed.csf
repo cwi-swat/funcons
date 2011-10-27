@@ -1,0 +1,12 @@
+Expr ::= typed(Expr,Type)
+
+Alias:	typed-cast
+
+Glossary:
+
+When $Expr$ computes $Data$ in $Type$, $typed(Expr,Type)$ computes the same.
+
+When $Expr$ has $Type'$ related to $Type$, $typed(Expr,Type)$ has $Type$.
+
+%% The rules will need notation for relations between types and data.
+

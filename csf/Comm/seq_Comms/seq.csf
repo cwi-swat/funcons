@@ -1,0 +1,19 @@
+Comm ::= seq(Comm*)
+
+Glossary:
+
+The commands are executed sequentially.
+
+Alias:  sequential
+
+1:      Comm --> Comm'
+        ---
+        seq(Comm,Comm*) --> seq(Comm',Comm*) %% ambiguous
+
+2:      seq(skip,Comm*) --> seq(Comm*) %% ambiguous
+
+3:      seq( ) --> skip
+
+%% 4:      Comm+ ==> Comm+'
+%%         ---
+%%         seq(Comm+) ==> seq(Comm+')

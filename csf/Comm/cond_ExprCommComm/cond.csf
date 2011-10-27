@@ -1,0 +1,28 @@
+Comm ::= cond(Expr,Comm,Comm)
+
+Alias:  conditional
+
+Glossary:
+
+The command $cond(Expr,Comm1,Comm2)$ starts by evaluating $Expr$, 
+then executing $Comm1$ if the result is $true$, or executing $Comm2$ 
+if it is $false$.
+
+It is well-typed only if $Expr$ is of $bool-type$.
+
+
+Uses:   Bool
+
+1:	Expr --> Expr'
+	---
+	cond(Expr,Comm1,Comm2) --> cond(Expr',Comm1,Comm2)
+
+2:	cond(true,Comm1,Comm2) --> Comm1
+
+3:	cond(false,Comm1,Comm2) --> Comm2
+
+1:	Expr ==> Expr' : bool-type,
+	Comm1 ==> Comm1',
+	Comm2 ==> Comm2'
+	---
+	cond(Expr,Comm1,Comm2) ==> cond(Expr',Comm1,Comm2)
