@@ -1,10 +1,7 @@
 module testcrash
 
-import List;
+layout JustSpaces = [\ ]*;
 
-data Y = tail(list[int] x) | tes(str a);
+syntax Crash = VariableUnique+ vars;
 
-public bool regular(Y check) {
-        return tail(n) := check;
-}
-/*public bool patternbased(tail(n)) = true; */
+lexical VariableUnique = [A-Z]+ [0-9]*;
