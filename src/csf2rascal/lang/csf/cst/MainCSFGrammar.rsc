@@ -59,9 +59,11 @@ syntax Part // in sdf only parts alternative may have layout, the others should 
 	| symbol: "_" Symbol symbol "_";
 
 lexical Variable 
-	= Sort sort Reg reg Suffix? suffix; // this cannot be put into the same version?
+	= Sort sort Reg? reg Suffix? suffix;
 	
-lexical Suffix = [0-9]* [\']?;
+lexical Suffix 
+	= [0-9]+ [\']?
+	| [\']; // to void ambiguity ([0-9]* [\']? causes ambiguity)
 
 syntax Computes = computes: "Computes:" {Variable ","}+ vars;
 
