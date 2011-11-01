@@ -54,6 +54,8 @@ private SimplifiedTree simplifyNoCollapse(Tree pt) {
 //  ;
 private SimplifiedTree simplifyNoCollapse(Production p, list[Tree] args) {
 	switch(p) {
+		case prod(\start(s),ss,ats) :
+			return simplifyNoCollapse(prod(s,ss,ats),args); 
 		case prod(\sort(sn),ss,ats) :
 			return ProdNode(sn,[simplifyNoCollapse(ag) | ag <- args]); 
 		case prod(\lex(ln),ss,ats) :
@@ -93,8 +95,8 @@ private str stringifySymbol(Symbol s) {
 		case \iter-star(s2) : return "<stringifySymbol(s2)>*"; 		
 		case \iter-seps(s2,seps) : return "{<stringifySymbol(s2)> <intercalate(",",["\"<stringifySymbol(sep)>\"" | sep <- seps])>}+"; 		
 		case \iter-star-seps(s2,seps) : return "{<stringifySymbol(s2)> <intercalate(",",["\"<stringifySymbol(sep)>\"" | sep <- seps])>}*"; 
-		case \alt(alts) : return intercalate(" | ", [stringifySymbol(alt) | alt <- alts]);
-		case \seq(alts) : return intercalate(" ", [stringifySymbol(alt) | alt <- alts]);
+		case \alt(alts) : return intercalate(" | ", [stringifySymbol(alti) | alti <- alts]);
+		case \seq(alts) : return intercalate(" ", [stringifySymbol(alti) | alti <- alts]);
 		case \conditional(s2,_) : return "<stringifySymbol(s2)>??"; // TODO: add conditional logic
 	}
 }
