@@ -2,7 +2,7 @@ module csf2rascal::lang::csf::cst::MainCSFGrammar
 
 extend lang::std::Layout;
 
-lexical Sort = [A-Z] [A-Za-z\-]* !>> [A-Za-z\-] ;
+lexical Sort = ([A-Z] [A-Za-z\-]* !>> [A-Za-z\-]) \ Keywords;
 
 lexical Name = [a-z] [a-z\-]* !>> [a-z\-];
 
@@ -13,6 +13,10 @@ lexical Symbol
 	;
 	
 lexical Infer = [\-][\-][\-] [\-]* !>> [\-]; // prefer in sdf??
+
+
+// To avoid ambiguities caused by Sort + Symbol (Part+) matching stuff like "Alias:"
+keyword Keywords = "Alias" | "Glossary" | "Uses" | "Local" | "Relation" | "Computes";
 
 start syntax CSF = csf: Notation notations Item* items;
 
