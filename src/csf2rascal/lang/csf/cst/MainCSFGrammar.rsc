@@ -34,12 +34,12 @@ syntax Alternative
 lexical Reg = [*+?];
 
 syntax Item
-	= aliasSort: "Alias:" Sort sort // sort and name closely related?
-	| aliasName: "Alias:" Name name
-	| glossay: "Glossary:" Text+ text
-	| uses: "Uses:" {Notation ","}+ notations
-	| local: "Local:" {Definition ","}+ definitions
-	| relations: "Relation:" Part+ parts Computes? computes
+	= aliasSort: "Alias" ":" Sort sort 
+	| aliasName: "Alias" ":" Name name
+	| glossay: "Glossary" ":" Text+ text
+	| uses: "Uses" ":" {Notation ","}+ notations
+	| local: "Local" ":" {Definition ","}+ definitions
+	| relations: "Relation" ":" Part+ parts Computes? computes
 	| singleRule: Rule singleRule;
 	
 syntax Text
@@ -69,7 +69,7 @@ lexical Suffix
 	= [0-9]+ [\']?
 	| [\']; // to void ambiguity ([0-9]* [\']? causes ambiguity)
 
-syntax Computes = computes: "Computes:" {Variable ","}+ vars;
+syntax Computes = computes: "Computes" ":" {Variable ","}+ vars;
 
 syntax Rule 
 	= basic: Label label Formula formula
