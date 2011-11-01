@@ -2,6 +2,10 @@ module csf2rascal::lang::csf::cst::MainCSFGrammar
 
 extend lang::std::Layout;
 
+lexical Comment 
+	= "%%"![\n]* $
+	| "%" ![%\n]* "%"$; // add comments from sdf
+
 lexical Sort = ([A-Z] [A-Za-z\-]* !>> [A-Za-z\-]) \ Keywords;
 
 lexical Name = [a-z] [a-z\-]* !>> [a-z\-];
