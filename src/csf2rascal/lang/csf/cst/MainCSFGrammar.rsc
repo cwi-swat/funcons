@@ -4,7 +4,7 @@ extend lang::std::Layout;
 
 lexical Comment 
 	= "%%"![\n]* $
-	| "%" ![%\n]* "%"$; // add comments from sdf
+	| "%" ![%\n]+ "%"$; // add comments from sdf
 
 lexical Sort = ([A-Z] [A-Za-z\-]* !>> [A-Za-z\-]) \ Keywords;
 
