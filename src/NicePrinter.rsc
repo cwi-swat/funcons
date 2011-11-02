@@ -85,9 +85,9 @@ private str stringifySymbol(Symbol s) {
 		case \keywords(kn) : return kn;
 		case \parameterized-sort(sn,ps) : return "<sn>[<intercalate(",",[stringifySymbol(p)|p<-ps])>]";
 		case \parameter(pn) : return pn;
-		case \label(ln,s) : return ln;
-		case \lit(s) : return s;
-		case \cilit(s) : return s;
+		case \label(ln,s2) : return ln;
+		case \lit(s2) : return s2;
+		case \cilit(s2) : return s2;
 		case \char-class(rs) : return "<rs>"; // TODO: Make this better...
 		case \empty() : return "";
 		case \opt(s2) : return "<stringifySymbol(s2)>?";
@@ -98,6 +98,7 @@ private str stringifySymbol(Symbol s) {
 		case \alt(alts) : return intercalate(" | ", [stringifySymbol(alti) | alti <- alts]);
 		case \seq(alts) : return intercalate(" ", [stringifySymbol(alti) | alti <- alts]);
 		case \conditional(s2,_) : return "<stringifySymbol(s2)>??"; // TODO: add conditional logic
+		default : throw "Unhandled Symbol <s>";
 	}
 }
 
