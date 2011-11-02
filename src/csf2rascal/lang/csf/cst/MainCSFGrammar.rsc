@@ -4,8 +4,8 @@ extend lang::std::Whitespace;
 extend lang::std::Comment;
 
 lexical Comment 
-	= "%%"![\n]* $
-	| "%" ![%\n]+ "%"$; // add comments from sdf
+	= @category="Comment" "%%"![\n]* $
+	| @category="Comment" "%" ![%\n]+ "%"$; // add comments from sdf
  
 layout Standard 
   = WhitespaceOrComment* !>> [\ \t\n\f\r] !>> "//" !>> "%%";
