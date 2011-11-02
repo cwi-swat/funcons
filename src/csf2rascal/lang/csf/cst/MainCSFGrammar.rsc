@@ -77,7 +77,10 @@ syntax Part // in sdf only parts alternative may have layout, the others should 
 
 lexical Variable = Sort sort Reg? reg Suffix? suffix;
 	
-lexical Suffix = [0-9]* [\']?;
+lexical Suffix 
+	= [0-9]+ [\']?
+	| [\']
+	;
 
 syntax Computes = computes: "Computes" ":" {Variable ","}+ vars;
 
