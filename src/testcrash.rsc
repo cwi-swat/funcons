@@ -2,6 +2,18 @@ module testcrash
 
 layout JustSpaces = [\ ]*;
 
-syntax Crash = VariableUnique+ vars;
+lexical Syms = [+\-]+ !>> [+\-];
 
-lexical VariableUnique = [A-Z]+ [0-9]*;
+lexical Sep = "---" "-"*;
+
+lexical Vars = [a-z];
+
+syntax S 
+	= F  f 
+	| F f Sep Vars v
+	;
+
+syntax F 
+	= Vars v 
+	| F lhs Syms s F rhs
+	;
