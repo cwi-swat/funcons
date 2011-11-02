@@ -1,10 +1,19 @@
 module csf2rascal::lang::csf::cst::MainCSFGrammar
 
-extend lang::std::Layout;
+extend lang::std::Whitespace;
+extend lang::std::Comment;
 
 lexical Comment 
 	= "%%"![\n]* $
 	| "%" ![%\n]+ "%"$; // add comments from sdf
+ 
+layout Standard 
+  = WhitespaceOrComment* !>> [\ \t\n\f\r] !>> "//" !>> "%%";
+  
+syntax WhitespaceOrComment 
+  = whitespace: Whitespace
+  | comment: Comment
+  ; 
 
 lexical Sort = ([A-Z] [A-Za-z\-]* !>> [A-Za-z\-]) \ Keywords;
 
