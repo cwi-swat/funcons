@@ -17,7 +17,7 @@ syntax WhitespaceOrComment
 
 lexical Sort = ([A-Z] [A-Za-z\-]* !>> [A-Za-z\-]) \ Keywords;
 
-lexical Name = ([a-z] [a-z\-]* !>> [a-z\-]) \ Keywords; // the lower case keywords such as def and not
+lexical Name = ([a-z] [a-z\-]* !>> [a-z\-]) \ FormulaKeywords; // the lower case keywords such as def and not
 
 //lexical Symbol = [=\<\>|\-:]+ !>> [=\<\>|\-:];
 // we have to make sure the Symbol will not be ambigui with Infer, therefore we do the repeated character classes with the third missing the -
@@ -27,7 +27,8 @@ lexical Infer = "---" "-"* !>> "-"; // prefer in sdf??
 
 
 // To avoid ambiguities caused by Sort + Symbol (Part+) matching stuff like "Alias:"
-keyword Keywords = "Alias" | "Glossary" | "Uses" | "Local" | "Relation" | "Computes" | "def" | "not";
+keyword Keywords = "Alias" | "Glossary" | "Uses" | "Local" | "Relation" | "Computes";
+keyword FormulaKeywords = "def" | "not";
 
 start syntax CSF = csf: Notation notations Item* items;
 
