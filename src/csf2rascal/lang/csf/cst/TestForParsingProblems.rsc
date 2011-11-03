@@ -3,6 +3,12 @@ module csf2rascal::lang::csf::cst::TestForParsingProblems
 import FileSystem;
 import csf2rascal::lang::csf::cst::Load;
 import IO;
+import Set;
+
+public bool checkAll() {
+	return (size(checkAllAmbiguities()) == 0)
+		&& (size(checkParsingErrors()) == 0);
+}
 
 public rel[loc,str] checkAllAmbiguities() {
 	result = {};
