@@ -19,7 +19,9 @@ lexical Sort = ([A-Z] [A-Za-z\-]* !>> [A-Za-z\-]) \ Keywords;
 
 lexical Name = [a-z] [a-z\-]* !>> [a-z\-];
 
-lexical Symbol = "---" !<< [=\<\>|\-:]+ !>> [=\<\>|\-:];
+//lexical Symbol = [=\<\>|\-:]+ !>> [=\<\>|\-:];
+// we have to make sure the Symbol will not be ambigui with Infer, therefore we do the repeated character classes with the third missing the -
+lexical Symbol = [=\<\>|\-:] ([=\<\>|\-:] ([=\<\>|:] [=\<\>|\-:]*)?)? !>> [=\<\>|\-:];
 	
 lexical Infer = "---" "-"* !>> "-"; // prefer in sdf??
 
