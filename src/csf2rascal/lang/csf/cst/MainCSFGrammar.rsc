@@ -19,7 +19,7 @@ lexical Sort = ([A-Z] [A-Za-z\-]* !>> [A-Za-z\-]) \ Keywords;
 
 lexical Name = [a-z] [a-z\-]* !>> [a-z\-];
 
-lexical Symbol_ = "---" !<< [=\<\>|\-:]+ !>> [=\<\>|\-:];
+lexical Symbol = "---" !<< [=\<\>|\-:]+ !>> [=\<\>|\-:];
 	
 lexical Infer = "---" "-"* !>> "-"; // prefer in sdf??
 
