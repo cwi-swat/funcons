@@ -2,7 +2,7 @@ module testcrash
 
 layout JustSpaces = [\ ]*;
 
-lexical Syms = [+\-]+ !>> [+\-];
+lexical Syms = "---" <<! [+\-]+ !>> [+\-];
 
 lexical Sep = "---" "-"*;
 
