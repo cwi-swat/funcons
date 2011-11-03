@@ -65,7 +65,7 @@ lexical Punctuation = [.,;:\'()];
 	
 syntax Definition
 	= single: Sort lhs "=" Sort rhs
-	| alternative: Sort lhs "=" Sort rhs "\\\\" Alternative alt;
+	| alternative: Sort lhs "=" Sort rhs "\\" Alternative alt;
 	
 syntax Part // in sdf only parts alternative may have layout, the others should be lexical
 	= parts: "(" {Part ","}+ parts ")"
