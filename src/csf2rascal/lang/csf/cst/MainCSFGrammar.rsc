@@ -47,7 +47,7 @@ lexical Reg = [*+?];
 syntax Item
 	= aliasSort: "Alias" ":" Sort sort 
 	| aliasName: "Alias" ":" Name name
-	| glossay: "Glossary" ":" Text+ text
+	| glossary: "Glossary" ":" Text+ text
 	| uses: "Uses" ":" {Notation ","}+ notations
 	| local: "Local" ":" {Definition ","}+ definitions
 	| relations: "Relation" ":" Part+ parts Computes? computes
