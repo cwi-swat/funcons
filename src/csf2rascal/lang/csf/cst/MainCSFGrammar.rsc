@@ -108,8 +108,8 @@ syntax Atom
 	 | terms: "(" {Term ","}* terms ")";
 	 
 lexical Constant
-	= natCon: NatCon nat
-	| strCon : StrCon str;
+	= natCon: NatCon nat !>> ":"
+	| strCon : StrCon str !>> ":";
 	
 // NatCon and StrCon from sdf
 lexical NatCon = digits: [0-9]+; 
