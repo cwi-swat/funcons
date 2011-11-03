@@ -21,7 +21,7 @@ lexical Name = [a-z] [a-z\-]* !>> [a-z\-];
 
 //lexical Symbol = [=\<\>|\-:]+ !>> [=\<\>|\-:];
 // we have to make sure the Symbol will not be ambigui with Infer, therefore we do the repeated character classes with the third missing the -
-lexical Symbol = [=\<\>|\-:] ([=\<\>|\-:] ([=\<\>|:] [=\<\>|\-:]*)?)? !>> [=\<\>|\-:];
+lexical Symbol = ([=\<\>|\-:] ([=\<\>|\-:] ([=\<\>|:] [=\<\>|\-:]*)?)? !>> [=\<\>|\-:]) \ "="; // remove the single = as a possible match to avoid ambiguity with Equation
 	
 lexical Infer = "---" "-"* !>> "-"; // prefer in sdf??
 
@@ -96,7 +96,7 @@ syntax Formula
 	
 syntax Relation = term: Term term;
 
-syntax Equation = eqation: Term lhs "=" !>> [=\<\>|\-:] Term rhs; // follow restriction is not in SDF?
+syntax Equation = eqation: Term lhs [=\<\>|\-:] !<< "=" !>> [=\<\>|\-:] Term rhs; // follow restriction is not in SDF?
 	
 syntax Term = term: Atom+ atom;
 
