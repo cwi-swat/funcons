@@ -58,7 +58,7 @@ syntax Text
 	| word: Word w
 	| punctuation: Punctuation p;
 	
-lexical Word = [A-Za-z\-]+ !>> [A-Za-z\-];
+lexical Word = [A-Za-z\-]+ !>> [A-Za-z\-] \ Keywords;
 
 lexical Punctuation = [.,;:\'()];
 	
