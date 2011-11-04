@@ -30,7 +30,7 @@ lexical Infer = "---" "-"* !>> "-"; // prefer in sdf??
 keyword Keywords = "Alias" | "Glossary" | "Uses" | "Local" | "Relation" | "Computes";
 keyword FormulaKeywords = "def" | "not";
 
-start syntax CSF = csf: Notation notations Item* items;
+start syntax CSF = csf: Notation notation Item* items;
 
 syntax Notation 
 	= sort: Sort sort
@@ -70,7 +70,7 @@ syntax Definition
 syntax Part // in sdf only parts alternative may have layout, the others should be lexical
 	= parts: "(" {Part ","}+ parts ")"
 	| variable: Variable variable 
-	| variable: "_" Variable variable "_"
+	| variable: "_" Variable variable "_" // perhaps need to distinguish between these?
 	| symbol: Symbol symbol
 	| symbol: "_" Symbol symbol "_";
 
@@ -99,7 +99,7 @@ syntax Relation = term: Term term;
 
 syntax Equation = eqation: Term lhs "=" !>> [=\<\>|\-:] Term rhs; // follow restriction is not in SDF?
 	
-syntax Term = term: Atom+ atom;
+syntax Term = term: Atom+ atoms;
 
 syntax Atom
 	 = variable: Variable var
