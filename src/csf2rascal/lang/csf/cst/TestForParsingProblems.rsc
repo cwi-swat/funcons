@@ -4,13 +4,14 @@ import FileSystem;
 import csf2rascal::lang::csf::cst::Load;
 import IO;
 import Set;
+import ParseTree;
 
 public bool checkAll() {
 	return (size(checkAllAmbiguities()) == 0)
 		&& (size(checkParsingErrors()) == 0);
 }
 
-public rel[loc,str] checkAllAmbiguities() {
+public rel[loc,Tree] checkAllAmbiguities() {
 	result = {};
 	iterateOverAllCSFFiles(void (loc f) {
 		try {

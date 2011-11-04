@@ -97,7 +97,7 @@ syntax Formula
 	
 syntax Relation = term: Term term;
 
-syntax Equation = eqation: Term lhs [=\<\>|\-:] !<< "=" !>> [=\<\>|\-:] Term rhs; // follow restriction is not in SDF?
+syntax Equation = eqation: Term lhs "=" !>> [=\<\>|\-:] Term rhs; // follow restriction is not in SDF?
 	
 syntax Term = term: Atom+ atom;
 
