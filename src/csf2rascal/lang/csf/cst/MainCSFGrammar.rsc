@@ -97,7 +97,7 @@ syntax Formula
 	
 syntax Relation = term: Term term;
 
-syntax Equation = eqation: Term lhs "=" !>> [=\<\>|\-:] Term rhs; // follow restriction is not in SDF?
+syntax Equation = equation: Term lhs "=" !>> [=\<\>|\-:] Term rhs; // follow restriction is not in SDF?
 	
 syntax Term = term: Atom+ atoms;
 
@@ -113,9 +113,9 @@ lexical Constant
 	| strCon : StrCon str !>> ":";
 	
 // NatCon and StrCon from sdf
-lexical NatCon = digits: [0-9]+; 
+lexical NatCon = [0-9]+; 
 
-lexical StrCon = def: [\"] StrChar* chars [\"];
+lexical StrCon = [\"] StrChar* chars [\"];
 
 lexical StrChar
 	= newline: [\n]

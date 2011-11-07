@@ -26,7 +26,7 @@ data Item
 	;
 	
 data Text 
-	= term(str term)
+	= term(Term term)
 	| word(str w)
 	| punctuation(str p)
 	;
@@ -37,7 +37,7 @@ data Definition
 	
 data Part
 	= parts(list[Part] parts)
-	| variable(Variable variable)
+	| variable(str variable)
 	| symbol(str symbol)
 	;
 	
@@ -45,7 +45,7 @@ data Variable = variable(str sort, list[str] reg, list[str] suffix);
 	
 data Rule
 	= basic(str label, Formula formula)
-	| complex(str label, list[Formula] formulas, Formula formula) 
+	| complex(str label, list[Formula] formulas, str infer, Formula formula) 
 	;
 
 data Formula
@@ -62,7 +62,7 @@ data Equation = equation(Term lhs, Term rhs);
 data Term = term(list[Atom] atoms);
 
 data Atom
-	= variable(Variable var)
+	= variable(str var)
 	| constant(Constant const)
 	| name(str name)
 	| symbol(str sym)
