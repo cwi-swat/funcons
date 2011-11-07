@@ -44,3 +44,12 @@ public rel[loc,loc] checkParsingErrors() {
 	return result;
 }
 
+public set[loc] searchForInstance(bool (Tree tree) tryMatch) {
+	result = {};
+	iterateOverAllCSFFiles(void (loc f) {
+		if (tryMatch(parseCSF(f))) {
+			result += {f};
+		}
+	});
+	return result;
+}
