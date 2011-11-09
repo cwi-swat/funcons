@@ -81,7 +81,7 @@ lexical Suffix
 	| [\']
 	;
 
-syntax Computes = computes: "Computes" ":" {Variable ","}+ vars;
+syntax Computes = "Computes" ":" {Variable ","}+ vars;
 
 syntax Rule 
 	= basic: Label label Formula formula

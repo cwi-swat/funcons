@@ -21,7 +21,7 @@ data Item
 	| glossary(list[Text] text)
 	| uses(list[Notation] notations)
 	| local(list[Definition] definitions)
-	| relations(list[Part] parts, list[Variable] computes)
+	| relations(list[Part] parts, list[str] computes)
 	| singleRule(Rule singleRule)
 	;
 	
@@ -40,8 +40,6 @@ data Part
 	| variable(str variable)
 	| symbol(str symbol)
 	;
-	
-data Variable = variable(str sort, list[str] reg, list[str] suffix);
 	
 data Rule
 	= basic(str label, Formula formula)
