@@ -12,7 +12,7 @@ data Alternative
 	| sort(str sort)
 	| nameParams(str name, list[str] params)
 	| nameParams(str name, str param, str multiplier)
-	| sortParams(str name, str param, str multiplier)
+	| sortParams(str sort, str param, str multiplier)
 	;
 	
 data Item
