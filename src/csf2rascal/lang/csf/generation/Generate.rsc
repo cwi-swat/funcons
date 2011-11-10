@@ -24,7 +24,8 @@ public void generateCSFFiles(loc basePath) {
 }
 
 private void generateSingleCSFFile(csf(s:sort(sortName), list[Item] items), loc basePath) {
-	loc fileName = basePath + sortName + "<sortName>.rsc";
+	list[str] names = getModuleNameList(getModuleParts(s));
+	loc fileName = (basePath | it + n | n <- names)[extension="rsc"];
 	println("writing<fileName>");
 	if (!exists(fileName.parent)) {
 		mkDirectory(fileName.parent);
