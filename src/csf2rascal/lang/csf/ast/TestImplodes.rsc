@@ -2,6 +2,7 @@ module csf2rascal::lang::csf::ast::TestImplodes
 
 import FileSystem;
 import csf2rascal::lang::csf::ast::Load;
+import csf2rascal::lang::csf::ast::Main;
 import IO;
 import Set;
 import ParseTree;
@@ -25,10 +26,10 @@ public rel[loc,str, str] checkForImplodeErrors() {
 	return result;
 }
 
-public set[loc] searchForInstance(bool (Tree tree) tryMatch) {
+public set[loc] searchForInstance(bool (CSF c) tryMatch) {
 	result = {};
 	iterateOverAllCSFFiles(void (loc f) {
-		if (tryMatch(parseCSF(f))) {
+		if (tryMatch(getCSF(f))) {
 			result += {f};
 		}
 	});
