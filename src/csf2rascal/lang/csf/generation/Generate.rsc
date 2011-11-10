@@ -37,17 +37,30 @@ private void generateSingleCSFFile(csf(s:sort(sortName), list[Item] items), loc 
 	);
 }
 
-private default void generateSingleCSFFile(CSF csf, loc basePath) {
-	str sortName = csf.notation.sort;
-	
-	loc fileName = basePath + sortName + "<sortName>.rsc";
+private void generateSingleCSFFile(csf(s:sortAlternative(sortName, alt), list[Item] items), loc basePath) {
+	list[str] names = getModuleNameList(getModuleParts(s));
+	loc fileName = (basePath | it + n | n <- names)[extension="rsc"];
+	println("writing<fileName>");
+	if (!exists(fileName.parent)) {
+		mkDirectory(fileName.parent);
+	}
+	writeFile(fileName, "module <moduleName(basePath, s)>
+		'
+		'extend <moduleName(basePath, Notation::sort(sortName))>;
+		'
+		'data <sortName> = <getAlternativeConstructor(alt)>;
+		"
+	);
 }
 
+private default void generateSingleCSFFile(CSF c, loc basePath) {
+	throw "Unhandled CSF alternative";
+}
 
 
 private str moduleName(loc basePath, Notation name) {
 	list[str] names = getModuleNameList(getModuleParts(name));
-	return replaceAll(substring(basePath.path, 1),"/","::") 
+	return replaceAll(substring(basePath.path, 5),"/","::") // remove the  /src/
 		+ (head(names) | it + "::" + m | m <- tail(names));
 }
 
@@ -76,4 +89,33 @@ private ModuleParts translateAlternative(nameParams(str name, str params, _)) = 
 private ModuleParts translateAlternative(sortParams(str sort, str params, _)) = package("_<sort><params>", \module("_"));
 private default ModuleParts translateAlternative(Alternative alt) { 
 	throw "Alternative not translated to package name";
+}
+
+private str getAlternativeConstructor(name(str name)) = "<fixUpName(name)>()";
+private str getAlternativeConstructor(Alternative::sort(str name)) = "<fixUpName(name)>()";
+private str getAlternativeConstructor(nameParams(str name, list[str] params)) = "<fixUpName(name)>(<getConstrutorParameters(params)>)";
+private str getAlternativeConstructor(nameParams(str name, str param, str multiplier)) = "<fixUpName(name)>(list[<param>] <camelCase(param)>)";
+private str getAlternativeConstructor(sortParams(str sort, str param, str multiplier)) = "<fixUpName(sort)>(list[<param>] <camelCase(param)>)";
+private default str getAlternativeConstructor(Alternative alt) { 
+	throw "Alternative not translated to package name";
+}
+
+
+private str camelCase(str name) = toLowerCase(substring(name,0,1)) + substring(name,1);
+
+private str fixUpName(str name) {
+	return name;
+}
+
+private str getConstrutorParameters(list[str] params) {
+	map[str,int] paramCounter = ();
+	for (p <- params) {
+		paramCounter[p] ? 0 += 1;
+	}	
+	map[str,int] paramsSeen = ();
+	str getParamName(str p) {
+		paramsSeen[p] ? 0 += 1;
+		return camelCase( p +  ((paramCounter[p] == 1) ? "" : "<paramsSeen[p]>"));
+	};
+	return ("<head(params)> <getParamName(head(params))>" | it + ", <p> <getParamName(p)>" | p <- tail(params));
 }
