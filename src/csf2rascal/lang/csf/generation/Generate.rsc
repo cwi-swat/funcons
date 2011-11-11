@@ -48,6 +48,13 @@ private void generateSingleCSFFile(csf(s:sortAlternative(sortName, alt), list[It
 		'
 		'extend <moduleName(basePath, Notation::sort(sortName))>;
 		'
+		'<if (alt.params? && !isEmpty(alt.params - [sortName])) {>
+			'<for (p <- toSet(alt.params - [sortName])) {>
+				'import <moduleName(basePath, Notation::sort(p))>;
+			'<}>
+		'<}><if (alt.param? && alt.param != sortName) {>
+			'import <moduleName(basePath, Notation::sort(alt.param))>;
+		'<}>
 		'data <sortName> = <getAlternativeConstructor(alt)>;
 		"
 	);
