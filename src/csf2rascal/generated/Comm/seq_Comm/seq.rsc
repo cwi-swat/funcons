@@ -4,5 +4,5 @@ extend csf2rascal::generated::Comm::Comm;
 
 
 
-data Comm = seq(list[Comm] comm);
+data Comm = seq(list[Comm] comms);
 		

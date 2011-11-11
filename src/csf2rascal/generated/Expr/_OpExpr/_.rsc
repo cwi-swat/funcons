@@ -4,5 +4,5 @@ extend csf2rascal::generated::Expr::Expr;
 
 
 
-data Expr = op(list[Expr] expr);
+data Expr = op(list[Expr] exprs);
 		

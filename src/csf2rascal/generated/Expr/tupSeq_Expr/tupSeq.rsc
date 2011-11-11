@@ -4,5 +4,5 @@ extend csf2rascal::generated::Expr::Expr;
 
 
 
-data Expr = tupSeq(list[Expr] expr);
+data Expr = tupSeq(list[Expr] exprs);
 		
