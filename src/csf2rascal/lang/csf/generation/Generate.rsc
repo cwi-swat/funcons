@@ -53,7 +53,7 @@ private void generateAllImportFile(CSF c, loc basePath, set[CSF] csfs) {
 	str currentSort = c.notation.sort;
 	writeFile(fileName, "module <moduleName(basePath, c.notation)>_all
 		'<for (csf(a:sortAlternative(currentSort,_),_) <- csfs) {>
-			'import <moduleName(basePath, a)>;
+			'extend <moduleName(basePath, a)>;
 		'<}>
 		"
 	);
