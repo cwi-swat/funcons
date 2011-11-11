@@ -3,5 +3,8 @@ module csf2rascal::generated::Expr::_Data::_
 extend csf2rascal::generated::Expr::Expr;
 
 
-data Expr = Data();
+
+import csf2rascal::generated::Data::Data;
+
+data Expr = data(Data data);
 		

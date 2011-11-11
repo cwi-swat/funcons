@@ -7,5 +7,6 @@ extend csf2rascal::generated::Decl::Decl;
 import csf2rascal::generated::Comm::Comm;
 
 
+
 data Decl = decl(Comm comm);
 		

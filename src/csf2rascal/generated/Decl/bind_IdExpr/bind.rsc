@@ -9,5 +9,6 @@ import csf2rascal::generated::Id::Id;
 import csf2rascal::generated::Expr::Expr;
 
 
+
 data Decl = bind(Id id, Expr expr);
 		

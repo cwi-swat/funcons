@@ -7,5 +7,6 @@ extend csf2rascal::generated::Comm::Comm;
 import csf2rascal::generated::Decl::Decl;
 
 
+
 data Comm = block(Decl decl, Comm comm);
 		

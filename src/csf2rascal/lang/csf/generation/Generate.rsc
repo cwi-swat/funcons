@@ -55,6 +55,9 @@ private void generateSingleCSFFile(csf(s:sortAlternative(sortName, alt), list[It
 		'<}><if (alt.param? && alt.param != sortName) {>
 			'import <moduleName(basePath, Notation::sort(alt.param))>;
 		'<}>
+		'<if (alt is sort) {>
+			'import <moduleName(basePath, Notation::sort(alt.sort))>;
+		'<}>
 		'data <sortName> = <getAlternativeConstructor(alt)>;
 		"
 	);
@@ -99,7 +102,7 @@ private default ModuleParts translateAlternative(Alternative alt) {
 }
 
 private str getAlternativeConstructor(name(str name)) = "<fixUpName(name)>()";
-private str getAlternativeConstructor(Alternative::sort(str name)) = "<fixUpName(name)>()";
+private str getAlternativeConstructor(Alternative::sort(str name)) = "<fixUpName(name)>(<fixUpSort(name)> <lowerCaseFirstChar(name)>)";
 private str getAlternativeConstructor(nameParams(str name, list[str] params)) = "<fixUpName(name)>(<getConstrutorParameters(params)>)";
 private str getAlternativeConstructor(nameParams(str name, str param, str multiplier)) = "<fixUpName(name)>(list[<param>] <lowerCaseFirstChar(param)>)";
 private str getAlternativeConstructor(sortParams(str sort, str param, str multiplier)) = "<fixUpName(sort)>(list[<param>] <lowerCaseFirstChar(param)>)";
@@ -120,7 +123,11 @@ private str fixUpName(str name) {
 		};
 		return lowerCaseFirstChar(("" | it + upperCaseFirstChar(n) | n <- nameParts));	
 	}
-	return name;
+	return lowerCaseFirstChar(name);
+}
+
+private str fixUpSort(str sortName) {
+	return upperCaseFirstChar(fixUpName(sortName));
 }
 
 private str getConstrutorParameters(list[str] params) {
