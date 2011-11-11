@@ -82,10 +82,10 @@ private default ModuleParts getModuleParts(Notation nt) {
 	throw "Notation not handled";
 }
 
-private ModuleParts translateAlternative(name(str name)) = package(name, \module(name));
+private ModuleParts translateAlternative(name(str name)) = package(fixUpName(name), \module(fixUpName(name)));
 private ModuleParts translateAlternative(Alternative::sort(str sort)) = package("_" + sort, \module("_"));
-private ModuleParts translateAlternative(nameParams(str name, list[str] params)) = package("<name>_<("" | it + p | p <- params)>", \module(name));
-private ModuleParts translateAlternative(nameParams(str name, str params, _)) = package("<name>_<params>", \module(name));
+private ModuleParts translateAlternative(nameParams(str name, list[str] params)) = package("<fixUpName(name)>_<("" | it + p | p <- params)>", \module(fixUpName(name)));
+private ModuleParts translateAlternative(nameParams(str name, str params, _)) = package("<fixUpName(name)>_<params>", \module(fixUpName(name)));
 private ModuleParts translateAlternative(sortParams(str sort, str params, _)) = package("_<sort><params>", \module("_"));
 private default ModuleParts translateAlternative(Alternative alt) { 
 	throw "Alternative not translated to package name";
@@ -94,16 +94,25 @@ private default ModuleParts translateAlternative(Alternative alt) {
 private str getAlternativeConstructor(name(str name)) = "<fixUpName(name)>()";
 private str getAlternativeConstructor(Alternative::sort(str name)) = "<fixUpName(name)>()";
 private str getAlternativeConstructor(nameParams(str name, list[str] params)) = "<fixUpName(name)>(<getConstrutorParameters(params)>)";
-private str getAlternativeConstructor(nameParams(str name, str param, str multiplier)) = "<fixUpName(name)>(list[<param>] <camelCase(param)>)";
-private str getAlternativeConstructor(sortParams(str sort, str param, str multiplier)) = "<fixUpName(sort)>(list[<param>] <camelCase(param)>)";
+private str getAlternativeConstructor(nameParams(str name, str param, str multiplier)) = "<fixUpName(name)>(list[<param>] <lowerCaseFirstChar(param)>)";
+private str getAlternativeConstructor(sortParams(str sort, str param, str multiplier)) = "<fixUpName(sort)>(list[<param>] <lowerCaseFirstChar(param)>)";
 private default str getAlternativeConstructor(Alternative alt) { 
 	throw "Alternative not translated to package name";
 }
 
 
-private str camelCase(str name) = toLowerCase(substring(name,0,1)) + substring(name,1);
+private str lowerCaseFirstChar(str name) = toLowerCase(substring(name,0,1)) + substring(name,1);
+private str upperCaseFirstChar(str name) = toUpperCase(substring(name,0,1)) + substring(name,1);
 
 private str fixUpName(str name) {
+	minusChars = findAll(name, "-");
+	if (size(minusChars) > 0) {
+		minusChars = [-1, minusChars, size(name)];
+		nameParts = for (i <- [0..size(minusChars)-2]) {
+			append substring(name, minusChars[i] + 1, minusChars[i+1]);
+		};
+		return lowerCaseFirstChar(("" | it + upperCaseFirstChar(n) | n <- nameParts));	
+	}
 	return name;
 }
 
@@ -115,7 +124,7 @@ private str getConstrutorParameters(list[str] params) {
 	map[str,int] paramsSeen = ();
 	str getParamName(str p) {
 		paramsSeen[p] ? 0 += 1;
-		return camelCase( p +  ((paramCounter[p] == 1) ? "" : "<paramsSeen[p]>"));
+		return lowerCaseFirstChar( p +  ((paramCounter[p] == 1) ? "" : "<paramsSeen[p]>"));
 	};
 	return ("<head(params)> <getParamName(head(params))>" | it + ", <p> <getParamName(p)>" | p <- tail(params));
 }
