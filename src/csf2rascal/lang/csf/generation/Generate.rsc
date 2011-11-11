@@ -102,12 +102,33 @@ private default ModuleParts translateAlternative(Alternative alt) {
 }
 
 private str getAlternativeConstructor(name(str name)) = "<fixUpName(name)>()";
-private str getAlternativeConstructor(Alternative::sort(str name)) = "<fixUpName(name)>(<fixUpSort(name)> <lowerCaseFirstChar(name)>)";
+private str getAlternativeConstructor(Alternative::sort(str name)) = "<fixUpName(name)>(<fixUpSort(name)> <escapeKeywords(lowerCaseFirstChar(name))>)";
 private str getAlternativeConstructor(nameParams(str name, list[str] params)) = "<fixUpName(name)>(<getConstrutorParameters(params)>)";
-private str getAlternativeConstructor(nameParams(str name, str param, str multiplier)) = "<fixUpName(name)>(list[<param>] <lowerCaseFirstChar(param)>)";
-private str getAlternativeConstructor(sortParams(str sort, str param, str multiplier)) = "<fixUpName(sort)>(list[<param>] <lowerCaseFirstChar(param)>)";
+private str getAlternativeConstructor(nameParams(str name, str param, str multiplier)) = "<fixUpName(name)>(list[<param>] <escapeKeywords(lowerCaseFirstChar(param))>)";
+private str getAlternativeConstructor(sortParams(str sort, str param, str multiplier)) = "<fixUpName(sort)>(list[<param>] <escapeKeywords(lowerCaseFirstChar(param))>)";
 private default str getAlternativeConstructor(Alternative alt) { 
 	throw "Alternative not translated to package name";
+}
+
+private set[str] toEscape = {
+	"int", "break", "continue", "rat", "true", "bag", "num", "node", "finally",
+	"private", "real", "list", "fail", "filter", "if", "tag", "extend",
+	"append", "repeat", "rel", "void", "non-assoc", "assoc", "test", "anno",
+	"layout", "data", "join", "it", "bracket", "in", "import", "false", "all",
+	"dynamic", "solve", "type", "try", "catch", "notin", "else", "insert", "switch",
+	"return", "case", "while", "str", "throws", "visit", "tuple", "for", "assert",
+	"loc", "default", "map", "alias", "any", "module", "bool", "public", "one",
+	"throw", "set", "start", "fun", "non-terminal", "rule", "constructor",
+	"datetime", "value", "loc", "node", "num", "type", "bag", "int", "rat", "rel",
+	"parameter", "real", "fun", "tuple", "str", "bool", "reified", "void",
+	"non-terminal", "datetime", "set", "map", "constructor", "list", "adt",
+	"import", "syntax", "start", "layout", "lexical", "keyword", "extend"
+};
+
+private str escapeKeywords(str nonEscaped) {
+	if (nonEscaped in toEscape) 
+		return "\\" + nonEscaped;
+	return nonEscaped;
 }
 
 
@@ -138,7 +159,7 @@ private str getConstrutorParameters(list[str] params) {
 	map[str,int] paramsSeen = ();
 	str getParamName(str p) {
 		paramsSeen[p] ? 0 += 1;
-		return lowerCaseFirstChar( p +  ((paramCounter[p] == 1) ? "" : "<paramsSeen[p]>"));
+		return escapeKeywords(lowerCaseFirstChar(p +  ((paramCounter[p] == 1) ? "" : "<paramsSeen[p]>")));
 	};
 	return ("<head(params)> <getParamName(head(params))>" | it + ", <p> <getParamName(p)>" | p <- tail(params));
 }

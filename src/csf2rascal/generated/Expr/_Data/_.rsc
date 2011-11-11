@@ -6,5 +6,5 @@ extend csf2rascal::generated::Expr::Expr;
 
 import csf2rascal::generated::Data::Data;
 
-data Expr = data(Data data);
+data Expr = data(Data \data);
 		

@@ -8,5 +8,5 @@ import csf2rascal::generated::Type::Type;
 
 
 
-data Prog = code(Prog prog, Type type);
+data Prog = code(Prog prog, Type \type);
 		

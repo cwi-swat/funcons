@@ -8,5 +8,5 @@ import csf2rascal::generated::Type::Type;
 
 
 
-data Expr = typed(Expr expr, Type type);
+data Expr = typed(Expr expr, Type \type);
 		
