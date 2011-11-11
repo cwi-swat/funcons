@@ -33,6 +33,27 @@ public void generateCSFFiles(loc basePath) {
 		+ {a.sort | csf(sortAlternative(_,a),_) <- csfs, a.sort?}
 		;
 	generateUnDefinedSorts(usedSorts - definedSorts, basePath);
+	
+	generatePrimaryAllImporter(definedSorts, usedSorts, basePath);
+}
+
+private void generatePrimaryAllImporter(set[str] definedSorts, set[str] usedSorts, loc basePath) {
+	list[str] names =  ["funcons"];
+	loc fileName = (basePath | it + n | n <- names)[extension="rsc"];
+	println("writing<fileName>");
+	if (!exists(fileName.parent)) {
+		mkDirectory(fileName.parent);
+	}
+	
+	writeFile(fileName, "module <moduleName(basePath, names)>
+		'<for (s <- definedSorts) {>
+			'extend <moduleName(basePath, Notation::sort(s))>_all;
+		'<}>
+		'<for (s <- (usedSorts - definedSorts)) {>
+			'extend <moduleName(basePath, Notation::sort(s))>;
+		'<}>
+		"
+	);
 }
 
 private void generateUnDefinedSorts(set[str] undefinedSorts, loc basePath) {
@@ -106,8 +127,16 @@ private default void generateSingleCSFFile(CSF c, loc basePath) {
 
 private str moduleName(loc basePath, Notation name) {
 	list[str] names = getModuleNameList(getModuleParts(name));
-	return replaceAll(substring(basePath.path, 5),"/","::") // remove the  /src/
-		+ (head(names) | it + "::" + m | m <- tail(names));
+	return moduleName(basePath, names);
+}
+
+private str moduleName(loc basePath, list[str] names) {
+	str startName = basePath.path;
+	if (startsWith(basePath.path, "/src/")) {
+		startName = substring(startName, 5);
+	}
+	return replaceAll(startName, "/", "::") 
+		+ intercalate("::", names); 
 }
 
 private list[str] getModuleNameList(\module(str name)) = [name];
