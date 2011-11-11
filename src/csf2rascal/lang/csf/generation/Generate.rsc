@@ -26,6 +26,20 @@ public void generateCSFFiles(loc basePath) {
 	for (c:csf(sort(_), _) <- csfs) {
 		generateAllImportFile(c, basePath, csfs);
 	}
+	
+	set[str] definedSorts = { s | csf(sort(s),_) <- csfs};
+	set[str] usedSorts = {s | csf(sortAlternative(_,a),_) <- csfs, a.params?, s <- a.params}
+		+ {a.param | csf(sortAlternative(_,a),_) <- csfs, a.param?}
+		+ {a.sort | csf(sortAlternative(_,a),_) <- csfs, a.sort?}
+		;
+	generateUnDefinedSorts(usedSorts - definedSorts, basePath);
+}
+
+private void generateUnDefinedSorts(set[str] undefinedSorts, loc basePath) {
+	for (us <- undefinedSorts) {
+		list[Item] empty = [];
+		generateSingleCSFFile(csf(Notation::sort(us), empty), basePath);
+	}
 }
 
 private void generateAllImportFile(CSF c, loc basePath, set[CSF] csfs) {
