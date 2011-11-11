@@ -18,9 +18,31 @@ public void generateCSFFiles() {
 }
 
 public void generateCSFFiles(loc basePath) {
-	for (c <- getAllCSFs()) {
+	set[CSF] csfs = getAllCSFs();
+	for (c <- csfs) {
 		generateSingleCSFFile(c, basePath);
 	}
+	
+	for (c:csf(sort(_), _) <- csfs) {
+		generateAllImportFile(c, basePath, csfs);
+	}
+}
+
+private void generateAllImportFile(CSF c, loc basePath, set[CSF] csfs) {
+	list[str] names = getModuleNameList(getModuleParts(c.notation));
+	names[size(names)-1] = names[size(names) -1] + "_all"; 
+	loc fileName = (basePath | it + n | n <- names)[extension="rsc"];
+	println("writing<fileName>");
+	if (!exists(fileName.parent)) {
+		mkDirectory(fileName.parent);
+	}
+	str currentSort = c.notation.sort;
+	writeFile(fileName, "module <moduleName(basePath, c.notation)>_all
+		'<for (csf(a:sortAlternative(currentSort,_),_) <- csfs) {>
+			'import <moduleName(basePath, a)>;
+		'<}>
+		"
+	);
 }
 
 private void generateSingleCSFFile(csf(s:sort(sortName), list[Item] items), loc basePath) {
