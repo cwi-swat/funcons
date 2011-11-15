@@ -80,21 +80,35 @@ private void generateSingleCSFFile(csf(s:sortAlternative(sortName, alt), list[It
 	writeFile(fileName, "module <moduleName(basePath, s)>
 		'
 		'extend <moduleName(basePath, Notation::sort(sortName))>;
-		'
-		'<if (alt.params? && !isEmpty(alt.params - [sortName])) {>
-			'<for (p <- toSet(alt.params - [sortName])) {>
-				'import <moduleName(basePath, Notation::sort(p))>;
-			'<}>
-		'<}><if (alt.param? && alt.param != sortName) {>
-			'import <moduleName(basePath, Notation::sort(alt.param))>;
-		'<}>
-		'<if (alt is sort) {>
-			'import <moduleName(basePath, Notation::sort(alt.sort))>;
-		'<}>
+		'<getImplicitImport(alt, basePath, sortName)>
 		'data <sortName> = <getAlternativeConstructor(alt)>;
 		"
 	);
 }
+
+private str getImplicitImport(nameParams(_, params), loc basePath, str currentSort) { 
+	paramsToInclude = toSet(params - [currentSort]);
+	if (isEmpty(paramsToInclude))
+		return "";
+	return intercalate("\n", ["import <moduleName(basePath, Notation::sort(p))>;" | p <- paramsToInclude]); 
+}
+
+private str getImplicitImport(nameParams(_, param, _), loc basePath, str currentSort) { 
+	if (param == currentSort) 
+		return "";
+	else
+		return "import <moduleName(basePath, Notation::sort(param))>;\n"; 
+}
+
+private str getImplicitImport(Alternative::sort(s), loc basePath, str currentSort) { 
+	if (s == currentSort) 
+		return "";
+	else
+		return "import <moduleName(basePath, Notation::sort(s))>;\n"; 
+}
+
+private default str getImplicitImport(Alternative a, loc basePath, str currentSort) = "";
+
 
 private default void generateSingleCSFFile(CSF c, loc basePath) {
 	throw "Unhandled CSF alternative";
