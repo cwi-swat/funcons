@@ -1,4 +1,4 @@
-module csf2rascal::generated::Expr::tup_Expr::tup
+module csf2rascal::generated::Expr::tup_Exprs::tup
 
 extend csf2rascal::generated::Expr::Expr;
 

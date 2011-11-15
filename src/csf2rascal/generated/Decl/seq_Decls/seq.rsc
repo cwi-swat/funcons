@@ -1,4 +1,4 @@
-module csf2rascal::generated::Decl::seq_Decl::seq
+module csf2rascal::generated::Decl::seq_Decls::seq
 
 extend csf2rascal::generated::Decl::Decl;
 

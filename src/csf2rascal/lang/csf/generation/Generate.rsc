@@ -125,8 +125,8 @@ private default ModuleParts getModuleParts(Notation nt) {
 private ModuleParts translateAlternative(name(str name)) = [fixUpName(name), fixUpName(name)];
 private ModuleParts translateAlternative(Alternative::sort(str sort)) = ["_" + sort, "_"];
 private ModuleParts translateAlternative(nameParams(str name, list[str] params)) = ["<fixUpName(name)>_<("" | it + p | p <- params)>", fixUpName(name)];
-private ModuleParts translateAlternative(nameParams(str name, str params, _)) = ["<fixUpName(name)>_<params>", fixUpName(name)];
-private ModuleParts translateAlternative(sortParams(str sort, str params, _)) = ["_<sort><params>", "_"];
+private ModuleParts translateAlternative(nameParams(str name, str params, str multiplier)) = ["<fixUpName(name)>_<params><getMultiplierPostFix(multiplier)>", fixUpName(name)];
+private ModuleParts translateAlternative(sortParams(str sort, str params, str multiplier)) = ["_<sort><params><getMultiplierPostFix(multiplier)>", "_"];
 private default ModuleParts translateAlternative(Alternative alt) { 
 	throw "Alternative not translated to package name";
 }

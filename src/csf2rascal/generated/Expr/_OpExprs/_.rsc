@@ -1,4 +1,4 @@
-module csf2rascal::generated::Expr::_OpExpr::_
+module csf2rascal::generated::Expr::_OpExprs::_
 
 extend csf2rascal::generated::Expr::Expr;
 
