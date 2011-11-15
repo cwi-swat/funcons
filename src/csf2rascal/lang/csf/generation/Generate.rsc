@@ -64,7 +64,7 @@ private void generateUnDefinedSorts(set[str] undefinedSorts, loc basePath) {
 }
 
 private void generateAllImportFile(CSF c, loc basePath, set[CSF] csfs) {
-	list[str] names = getModuleNameList(getModuleParts(c.notation));
+	list[str] names = getModuleParts(c.notation);
 	names[size(names)-1] = names[size(names) -1] + "_all"; 
 	loc fileName = (basePath | it + n | n <- names)[extension="rsc"];
 	println("writing<fileName>");
@@ -81,7 +81,7 @@ private void generateAllImportFile(CSF c, loc basePath, set[CSF] csfs) {
 }
 
 private void generateSingleCSFFile(csf(s:sort(sortName), list[Item] items), loc basePath) {
-	list[str] names = getModuleNameList(getModuleParts(s));
+	list[str] names = getModuleParts(s);
 	loc fileName = (basePath | it + n | n <- names)[extension="rsc"];
 	println("writing<fileName>");
 	if (!exists(fileName.parent)) {
@@ -95,7 +95,7 @@ private void generateSingleCSFFile(csf(s:sort(sortName), list[Item] items), loc 
 }
 
 private void generateSingleCSFFile(csf(s:sortAlternative(sortName, alt), list[Item] items), loc basePath) {
-	list[str] names = getModuleNameList(getModuleParts(s));
+	list[str] names = getModuleParts(s);
 	loc fileName = (basePath | it + n | n <- names)[extension="rsc"];
 	println("writing<fileName>");
 	if (!exists(fileName.parent)) {
@@ -126,8 +126,7 @@ private default void generateSingleCSFFile(CSF c, loc basePath) {
 
 
 private str moduleName(loc basePath, Notation name) {
-	list[str] names = getModuleNameList(getModuleParts(name));
-	return moduleName(basePath, names);
+	return moduleName(basePath, getModuleParts(name));
 }
 
 private str moduleName(loc basePath, list[str] names) {
@@ -137,31 +136,21 @@ private str moduleName(loc basePath, list[str] names) {
 	}
 	return replaceAll(startName, "/", "::") 
 		+ intercalate("::", names); 
-}
+}			
 
-private list[str] getModuleNameList(\module(str name)) = [name];
-private list[str] getModuleNameList(\package(str name,ModuleParts nested)) = [name, getModuleNameList(nested)];
-private default list[str] getModuleNameList(ModuleParts mp) {
-	throw "ModuleParts not handled?";
-}
-			
+private alias ModuleParts = list[str]; 
 
-private data ModuleParts 
-	= package(str name, ModuleParts nested)
-	| \module(str name)
-	;	
-
-private ModuleParts getModuleParts(Notation::sort(str sortName)) = package(sortName, \module(sortName));
-private ModuleParts getModuleParts(sortAlternative(sortName, alt)) = package(sortName, translateAlternative(alt));
+private ModuleParts getModuleParts(Notation::sort(str sortName)) = [sortName, sortName];
+private ModuleParts getModuleParts(sortAlternative(sortName, alt)) = [sortName, translateAlternative(alt)];
 private default ModuleParts getModuleParts(Notation nt) {
 	throw "Notation not handled";
 }
 
-private ModuleParts translateAlternative(name(str name)) = package(fixUpName(name), \module(fixUpName(name)));
-private ModuleParts translateAlternative(Alternative::sort(str sort)) = package("_" + sort, \module("_"));
-private ModuleParts translateAlternative(nameParams(str name, list[str] params)) = package("<fixUpName(name)>_<("" | it + p | p <- params)>", \module(fixUpName(name)));
-private ModuleParts translateAlternative(nameParams(str name, str params, _)) = package("<fixUpName(name)>_<params>", \module(fixUpName(name)));
-private ModuleParts translateAlternative(sortParams(str sort, str params, _)) = package("_<sort><params>", \module("_"));
+private ModuleParts translateAlternative(name(str name)) = [fixUpName(name), fixUpName(name)];
+private ModuleParts translateAlternative(Alternative::sort(str sort)) = ["_" + sort, "_"];
+private ModuleParts translateAlternative(nameParams(str name, list[str] params)) = ["<fixUpName(name)>_<("" | it + p | p <- params)>", fixUpName(name)];
+private ModuleParts translateAlternative(nameParams(str name, str params, _)) = ["<fixUpName(name)>_<params>", fixUpName(name)];
+private ModuleParts translateAlternative(sortParams(str sort, str params, _)) = ["_<sort><params>", "_"];
 private default ModuleParts translateAlternative(Alternative alt) { 
 	throw "Alternative not translated to package name";
 }
