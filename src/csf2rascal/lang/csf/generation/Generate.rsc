@@ -23,10 +23,6 @@ public void generateCSFFiles(loc basePath) {
 		generateSingleCSFFile(c, basePath);
 	}
 	
-	for (c:csf(sort(_), _) <- csfs) {
-		generateAllImportFile(c, basePath, csfs);
-	}
-	
 	set[str] definedSorts = { s | csf(sort(s),_) <- csfs};
 	set[str] usedSorts = {s | csf(sortAlternative(_,a),_) <- csfs, a.params?, s <- a.params}
 		+ {a.param | csf(sortAlternative(_,a),_) <- csfs, a.param?}
@@ -34,23 +30,20 @@ public void generateCSFFiles(loc basePath) {
 		;
 	generateUnDefinedSorts(usedSorts - definedSorts, basePath);
 	
-	generatePrimaryAllImporter(definedSorts, usedSorts, basePath);
+	generatePrimaryAllImporter(csfs, basePath);
 }
 
-private void generatePrimaryAllImporter(set[str] definedSorts, set[str] usedSorts, loc basePath) {
-	list[str] names =  ["funcons"];
-	loc fileName = (basePath | it + n | n <- names)[extension="rsc"];
+private void generatePrimaryAllImporter(set[CSF] csfs, loc basePath) {
+	loc fileName = basePath + "funcons.rsc";
 	println("writing<fileName>");
 	if (!exists(fileName.parent)) {
 		mkDirectory(fileName.parent);
 	}
+	list[str] modules = sort([moduleName(basePath, a) | csf(a:sortAlternative(_,_),_) <- csfs]);
 	
-	writeFile(fileName, "module <moduleName(basePath, names)>
-		'<for (s <- definedSorts) {>
-			'extend <moduleName(basePath, Notation::sort(s))>_all;
-		'<}>
-		'<for (s <- (usedSorts - definedSorts)) {>
-			'extend <moduleName(basePath, Notation::sort(s))>;
+	writeFile(fileName, "module <moduleName(basePath, ["funcons"])>
+		'<for (s <- modules) {>
+			'extend <s>;
 		'<}>
 		"
 	);
@@ -61,23 +54,6 @@ private void generateUnDefinedSorts(set[str] undefinedSorts, loc basePath) {
 		list[Item] empty = [];
 		generateSingleCSFFile(csf(Notation::sort(us), empty), basePath);
 	}
-}
-
-private void generateAllImportFile(CSF c, loc basePath, set[CSF] csfs) {
-	list[str] names = getModuleParts(c.notation);
-	names[size(names)-1] = names[size(names) -1] + "_all"; 
-	loc fileName = (basePath | it + n | n <- names)[extension="rsc"];
-	println("writing<fileName>");
-	if (!exists(fileName.parent)) {
-		mkDirectory(fileName.parent);
-	}
-	str currentSort = c.notation.sort;
-	writeFile(fileName, "module <moduleName(basePath, c.notation)>_all
-		'<for (csf(a:sortAlternative(currentSort,_),_) <- csfs) {>
-			'extend <moduleName(basePath, a)>;
-		'<}>
-		"
-	);
 }
 
 private void generateSingleCSFFile(csf(s:sort(sortName), list[Item] items), loc basePath) {
