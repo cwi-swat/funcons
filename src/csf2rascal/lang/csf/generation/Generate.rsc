@@ -158,11 +158,13 @@ private default ModuleParts translateAlternative(Alternative alt) {
 private str getAlternativeConstructor(name(str name)) = "<fixUpName(name)>()";
 private str getAlternativeConstructor(Alternative::sort(str name)) = "<escapeKeywords(fixUpName(name))>(<fixUpSort(name)> <escapeKeywords(lowerCaseFirstChar(name))>)";
 private str getAlternativeConstructor(nameParams(str name, list[str] params)) = "<escapeKeywords(fixUpName(name))>(<getConstrutorParameters(params)>)";
-private str getAlternativeConstructor(nameParams(str name, str param, str multiplier)) = "<escapeKeywords(fixUpName(name))>(list[<param>] <escapeKeywords(lowerCaseFirstChar(param)+"s")>)";
-private str getAlternativeConstructor(sortParams(str sort, str param, str multiplier)) = "<escapeKeywords(fixUpName(sort))>(list[<param>] <escapeKeywords(lowerCaseFirstChar(param) + "s")>)";
+private str getAlternativeConstructor(nameParams(str name, str param, str multiplier)) = "<escapeKeywords(fixUpName(name))>(list[<param>] <escapeKeywords(lowerCaseFirstChar(param) + getMultiplierPostFix(multiplier))>)";
+private str getAlternativeConstructor(sortParams(str sort, str param, str multiplier)) = "<escapeKeywords(fixUpName(sort))>(list[<param>] <escapeKeywords(lowerCaseFirstChar(param) + getMultiplierPostFix(multiplier))>)";
 private default str getAlternativeConstructor(Alternative alt) { 
 	throw "Alternative not translated to package name";
 }
+
+private str getMultiplierPostFix(str multiplier) = (multiplier == "?") ? "q" : "s";
 
 private set[str] toEscape = {
 	"int", "break", "continue", "rat", "true", "bag", "num", "node", "finally",
