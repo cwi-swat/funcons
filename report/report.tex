@@ -136,7 +136,7 @@ implementations.
 		This is not visible for the funcons users since \ASFSDF allows implicit
 		chaining when they cause no ambiguity.
 		\Rascal does not support implicit chaining, and this makes a funcon such
-		as \code{Int[[ Nat ]] = Nat} in \ASF become 
+		as \code{Expr[[ NatCon ]] = NatCon} in \ASF become 
 		\code{\ldots = data(int(nat(Nat::natCon(val))))} in \Rascal.
 		We can solve this with a rewrite rule, but it means that for each funcon
 		we have to determine where it is actually used and create a rewrite rule
