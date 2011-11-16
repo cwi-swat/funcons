@@ -24,3 +24,7 @@ tags
 bin
 
 *.*~
+
+*.aux
+*.log
+*.*_latexmk
