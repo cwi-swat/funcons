@@ -146,11 +146,11 @@ implementations.
 	
 
 	\begin{lstlisting}
-public Prog pico2Prog(Program::program(list[IdType] decls, list[Statement] body)) =
-	Prog::run(compile(block( 
-		pico2Decl(decls), 
+public Comm pico2Comm(Statement::loop(con, body)) =
+	whileLoop( 
+		noteq(pico2Expr(con), natCon(0)), 
 		pico2Comm(body)
-	)));
+	);
 	\end{lstlisting}
 
 
