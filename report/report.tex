@@ -7,7 +7,7 @@
 \usepackage{xspace}
 \usepackage{relsize}
 \usepackage{listings}
-\lstset{language=Java}
+\lstset{language=Java, basicstyle=\small}
 
 
 % font stuff
@@ -106,9 +106,7 @@ implementations.
 		The \filename{src/funcons/funcons.rsc} file contains the complete funcons
 		\ADT equivelant to the \SDF implementation.
 
-		\subsubsection{Expressiveness difference}
-
-		\paragraph{\code{Op} funcons}
+		\subsubsection{\code{Op} funcon}
 		The \code{Op} funcon causes the biggest difference in implementation, since
 		the \SDF definition creates a structure not easily represented in the \ADT
 		structure of \Rascal (this funcon is an example of a funcon only defined
@@ -126,13 +124,14 @@ implementations.
 		\code{application} alternative to the \code{Data} sort.
 		This would mean we would have to write the first example as:
 		\code{application(intPlus(), [Expr(EXP1), Expr(EXP2)])}.
+
 		However, \Rascal has rewrite rules, and this allows us to write 
 		\code{intPlus(Expr(EXP1), Expr(EXP2))}.
 		It is important to note that we asume to know the amount of parameter
 		usually used for the funcon, else we would have to wrap the parameters
 		into a list.
 
-		\paragraph{Explicit production chains}
+		\subsubsection{Explicit production chains}
 		In the \ASFSDF implementation, production chains are often used.
 		This is not visible for the funcons users since \ASFSDF allows implicit
 		chaining when they cause no ambiguity.
@@ -144,6 +143,7 @@ implementations.
 		for that usage.
 	
 	\subsection{Semantic description using funcons}
+	
 
 	\begin{lstlisting}
 public Prog pico2Prog(Program::program(list[IdType] decls, list[Statement] body)) =
