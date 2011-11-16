@@ -18,6 +18,7 @@
 \title{Funcons in Rascal - report}
 \author{Davy Landman}
 
+% nicely formatted acronyms 
 \newcommand{\Rascal}{\textsc{Rascal}\xspace}
 \newcommand{\CSF}{\textsmaller{CSF}\xspace}
 \newcommand{\ASFSDF}{\textsmaller{ASF-SDF}\xspace}
@@ -28,6 +29,13 @@
 \newcommand{\ADT}{\textsmaller{ADT}\xspace}
 \newcommand{\ADTs}{\textsmaller{ADTs}\xspace}
 
+% todo marker
+\usepackage[svgnames]{xcolor}
+\usepackage{marginfix}
+\newcommand{\todo}[1]{%
+	\marginpar{%
+	\colorbox{yellow}{\parbox{0.9\marginparwidth}{%
+		\raggedright \footnotesize #1}}}}
 	
 \begin{document}
 \maketitle
@@ -58,6 +66,7 @@ implementations.
 			Moreover, the \CSF specifications contain the descriptions of how to
 			`interpret' a funcon, but the generation of an interpreter was not yet
 			implemented. 
+			\todo{mention MSOS etc?}
 		
 
 	\subsection{\Rascal}
