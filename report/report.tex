@@ -6,6 +6,7 @@
 \usepackage{fixltx2e}
 \usepackage{xspace}
 \usepackage{relsize}
+\usepackage{listings}
 
 % font stuff
 \usepackage[T1]{fontenc}
@@ -139,6 +140,16 @@ implementations.
 		We can solve this with a rewrite rule, but it means that for each funcon
 		we have to determine where it is actually used and create a rewrite rule
 		for that usage.
+	
+	\subsection{Semantic description using funcons}
+
+	\begin{lstlisting}
+public Prog pico2Prog(Program::program(list[IdType] decls, list[Statement] body)) =
+	Prog::run(compile(block( 
+		pico2Decl(decls), 
+		pico2Comm(body)
+	)));
+	\end{lstlisting}
 
 
 \section{CSF generated implementation}
