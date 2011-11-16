@@ -29,6 +29,9 @@
 \newcommand{\ADT}{\textsmaller{ADT}\xspace}
 \newcommand{\ADTs}{\textsmaller{ADTs}\xspace}
 
+\newcommand{\filename}[1]{\texttt{#1}\xspace}
+\newcommand{\code}[1]{\texttt{#1}\xspace}
+
 % todo marker
 \usepackage[svgnames]{xcolor}
 \usepackage{marginfix}
@@ -88,6 +91,52 @@ implementations.
 
 
 \section{Manual implementation}
+	Since only a subset of the funcons were defined in the \CSF specifications
+	we first created a manual translation of the funcons in \SDF.
+	While this translation lacks modularity, it does provide an insight of how
+	a \Rascal funcons implementation works.
+
+	\subsection{The funcons \ADT}
+		The \filename{src/funcons/funcons.rsc} file contains the complete funcons
+		\ADT equivelant to the \SDF implementation.
+
+		\subsubsection{Expressiveness difference}
+
+		\paragraph{\code{Op} funcons}
+		The \code{Op} funcon causes the biggest difference in implementation, since
+		the \SDF definition creates a structure not easily represented in the \ADT
+		structure of \Rascal (this funcon is an example of a funcon only defined
+		in \SDF).
+
+		Take for example the funcon \code{int-plus} which can be used used as 
+		\code{int-plus(	Expr[[EXP1]], Expr[[EXP1]])}, 
+		but also as 
+		\code{comp(int-plus, int-neq)}.
+
+		We could solve this by adding the \code{int-plus} (and all the others)
+		to the \code{Data} sort and the \code{Op} sort, but this would
+		polute our \ADT definition.
+		So we chose to only add \code{int-plus} to the \code{Op} sort and add a
+		\code{application} alternative to the \code{Data} sort.
+		This would mean we would have to write the first example as:
+		\code{application(intPlus(), [Expr(EXP1), Expr(EXP2)])}.
+		However, \Rascal has rewrite rules, and this allows us to write 
+		\code{intPlus(Expr(EXP1), Expr(EXP2))}.
+		It is important to note that we asume to know the amount of parameter
+		usually used for the funcon, else we would have to wrap the parameters
+		into a list.
+
+		\paragraph{Explicit production chains}
+		In the \ASFSDF implementation, production chains are often used.
+		This is not visible for the funcons users since \ASFSDF allows implicit
+		chaining when they cause no ambiguity.
+		\Rascal does not support implicit chaining, and this makes a funcon such
+		as \code{Int[[ Nat ]] = Nat} in \ASF become 
+		\code{\ldots = data(int(nat(Nat::natCon(val))))} in \Rascal.
+		We can solve this with a rewrite rule, but it means that for each funcon
+		we have to determine where it is actually used and create a rewrite rule
+		for that usage.
+
 
 \section{CSF generated implementation}
 
