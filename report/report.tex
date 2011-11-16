@@ -19,12 +19,14 @@
 \author{Davy Landman}
 
 \newcommand{\Rascal}{\textsc{Rascal}\xspace}
+\newcommand{\CSF}{\textsmaller{CSF}\xspace}
 \newcommand{\ASFSDF}{\textsmaller{ASF-SDF}\xspace}
 \newcommand{\SDF}{\textsmaller{SDF}\xspace}
 \newcommand{\ASF}{\textsmaller{ASF}\xspace}
 \newcommand{\AST}{\textsmaller{AST}\xspace}
 \newcommand{\CST}{\textsmaller{CST}\xspace}
-\newcommand{\CSF}{\textsmaller{CSF}\xspace}
+\newcommand{\ADT}{\textsmaller{ADT}\xspace}
+\newcommand{\ADTs}{\textsmaller{ADTs}\xspace}
 
 	
 \begin{document}
@@ -50,6 +52,22 @@
 		
 
 	\subsection{\Rascal}
+		The \Rascal funcons implementation aims to closely match the \ASFSDF
+		implementation.
+		\Rascal however, has more features suited for this domain and we have
+		chosen to use those features to showcase the possible improvements.
+
+		The first stage is similiar, \Rascal also uses \CSF to generate the
+		funcon specifications.
+		However, since \Rascal features functions and \ADTs we do not generate 
+		funcon as a language specification but we generate \Rascal files containing
+		the funcon \ADT structure.
+		These funcon \ADTs can than be used to define the semantics of a
+		programming language in a similar fashion as in \ASFSDF.
+
+		\paragraph{Current limitations:}
+			Same as in \ASFSDF.
+
 
 \section{Manual implementation}
 
