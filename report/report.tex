@@ -6,15 +6,28 @@
 \usepackage{fullpage}
 \usepackage{microtype}
 \usepackage{fixltx2e}
-\usepackage{lmodern}
+\usepackage{lmodern} \normalfont
+\usepackage{xspace}
+\usepackage{relsize}
 
 \title{Funcons in Rascal - report}
 \author{Davy Landman}
 
+\newcommand{\Rascal}{\textsc{Rascal}\xspace}
+\newcommand{\ASFSDF}{\textsmaller{ASF-SDF}\xspace}
+\newcommand{\AST}{\textsmaller{AST}\xspace}
+\newcommand{\CST}{\textsmaller{CST}\xspace}
+\newcommand{\CSF}{\textsmaller{CSF}\xspace}
+
+\DeclareFontShape{T1}{lmr}{bx}{sc} { <-> ssub * cmr/bx/sc }{}
+	
 \begin{document}
 \maketitle
 
-\section{What is rascal?}
+\section{The architecture}
+\subsection{\ASFSDF}
+
+\subsection{\Rascal}
 
 \section{Manual implementation}
 
