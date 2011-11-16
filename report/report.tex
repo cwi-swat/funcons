@@ -1,33 +1,55 @@
 \RequirePackage[l2tabu,orthodox]{nag}
-\documentclass[a4paper, 10pt, oneside, notitlepage]{article}
+\documentclass[a4paper, oneside, notitlepage]{article}
 
-\usepackage[T1]{fontenc}
 \usepackage[english]{babel}
 \usepackage{fullpage}
-\usepackage{microtype}
 \usepackage{fixltx2e}
-\usepackage{lmodern} \normalfont
 \usepackage{xspace}
 \usepackage{relsize}
+
+% font stuff
+\usepackage[T1]{fontenc}
+\usepackage{microtype}
+\usepackage{lmodern} \normalfont
+% lmodern has no smallcaps bold , so we replace it by computer-modern (closely
+% related)
+\DeclareFontShape{T1}{lmr}{bx}{sc} { <-> ssub * cmr/bx/sc }{}
 
 \title{Funcons in Rascal - report}
 \author{Davy Landman}
 
 \newcommand{\Rascal}{\textsc{Rascal}\xspace}
 \newcommand{\ASFSDF}{\textsmaller{ASF-SDF}\xspace}
+\newcommand{\SDF}{\textsmaller{SDF}\xspace}
+\newcommand{\ASF}{\textsmaller{ASF}\xspace}
 \newcommand{\AST}{\textsmaller{AST}\xspace}
 \newcommand{\CST}{\textsmaller{CST}\xspace}
 \newcommand{\CSF}{\textsmaller{CSF}\xspace}
 
-\DeclareFontShape{T1}{lmr}{bx}{sc} { <-> ssub * cmr/bx/sc }{}
 	
 \begin{document}
 \maketitle
 
 \section{The architecture}
-\subsection{\ASFSDF}
+	\subsection{\ASFSDF}
+		In \ASFSDF the funcons are implemented in a two stage approach.
+		The first stage is `compiling' the \CSF~(funcons specifications) into
+		\SDF definitions.
+		These definitions can then be used to describe the semantics of a
+		programming language.
+		These funcon semantics are connected to syntax of the programming
+		language using the \ASF equations.
 
-\subsection{\Rascal}
+		\paragraph{Current limitations:}
+			At the time of writing, not all funcons are specified in \CSF,
+			which means that not all the \SDF defined funcons were generated
+			from the \CSF specifications. 
+			Moreover, the \CSF specifications contain the descriptions of how to
+			`interpret' a funcon, but the generation of an interpreter was not yet
+			implemented. 
+		
+
+	\subsection{\Rascal}
 
 \section{Manual implementation}
 
