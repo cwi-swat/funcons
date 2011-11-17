@@ -1,4 +1,3 @@
-\RequirePackage[l2tabu,orthodox]{nag}
 \documentclass[a4paper, oneside, notitlepage]{article}
 
 \usepackage[english]{babel}
@@ -6,8 +5,6 @@
 \usepackage{fixltx2e}
 \usepackage{xspace}
 \usepackage{relsize}
-\usepackage{listings}
-\lstset{language=Java, basicstyle=\small}
 
 
 % font stuff
@@ -19,13 +16,11 @@
 \DeclareFontShape{T1}{lmr}{bx}{sc} { <-> ssub * cmr/bx/sc }{}
 \usepackage[scaled=0.8]{beramono} % monospace font with bold support
 
-\title{Funcons in Rascal - report}
-\author{Davy Landman}
 
 % nicely formatted acronyms 
-\newcommand{\Rascal}{\textsc{Rascal}\xspace}
+%\newcommand{\Rascal}{\textsc{Rascal}\xspace}
 \newcommand{\CSF}{\textsmaller{CSF}\xspace}
-\newcommand{\ASFSDF}{\textsmaller{ASF-SDF}\xspace}
+\newcommand{\ASFSDF}{\textsmaller{ASF+SDF}\xspace}
 \newcommand{\SDF}{\textsmaller{SDF}\xspace}
 \newcommand{\ASF}{\textsmaller{ASF}\xspace}
 \newcommand{\AST}{\textsmaller{AST}\xspace}
@@ -46,6 +41,8 @@
 	\colorbox{yellow}{\parbox{0.9\marginparwidth}{%
 		\raggedright \footnotesize #1}}}}
 	
+\title{Funcons in Rascal - report}
+\author{Davy Landman}
 \begin{document}
 \maketitle
 
@@ -111,8 +108,7 @@ implementations.
 		Below is a snippet from this file.
 
 		\input{adtextract.ltx}
-
-
+		
 		\subsubsection{\code{Op} funcon}
 		The \code{Op} funcon causes the biggest difference in implementation, since
 		the \SDF definition creates a structure not easily represented in the \ADT
@@ -125,15 +121,15 @@ implementations.
 		\code{comp(int-plus, int-neq)}.
 
 		We could solve this by adding the \code{int-plus} (and all the others)
-		to the \code{Data} sort and the \code{Op} sort, but this would
+		to the \code{Data} and \code{Expr} sorts and the \code{Op} sort, but this would
 		polute our \ADT definition.
 		So we chose to only add \code{int-plus} to the \code{Op} sort and add a
-		\code{application} alternative to the \code{Data} sort.
+		\code{application} alternative to the \code{Data} and \code{Expr} sorts.
 		This would mean we would have to write the first example as:
-		\code{application(intPlus(), [Expr(EXP1), Expr(EXP2)])}.
+		\irascal{application(intPlus(), [Expr(EXP1), Expr(EXP2)])}.
 
 		However, \Rascal has rewrite rules, and this allows us to write 
-		\code{intPlus(Expr(EXP1), Expr(EXP2))}.
+		\irascal{intPlus(Expr(EXP1), Expr(EXP2))}.
 		It is important to note that we asume to know the amount of parameter
 		usually used for the funcon, else we would have to wrap the parameters
 		into a list.
@@ -144,7 +140,7 @@ implementations.
 		chaining when they cause no ambiguity.
 		\Rascal does not support implicit chaining, and this makes a funcon such
 		as \code{Expr[[ NatCon ]] = NatCon} in \ASF become 
-		\code{\ldots = data(int(nat(Nat::natCon(val))))} in \Rascal.
+		\code{\ldots = \irascal{data(int(nat(Nat::natCon(val))))}} in \Rascal.
 		We can solve this with a rewrite rule, but it means that for each funcon
 		we have to determine where it is actually used and create a rewrite rule
 		for that usage.
@@ -152,13 +148,13 @@ implementations.
 	\subsection{Semantic description using funcons}
 	
 
-	\begin{lstlisting}
+	\begin{rascal}
 public Comm pico2Comm(Statement::loop(con, body)) =
 	whileLoop( 
 		noteq(pico2Expr(con), natCon(0)), 
 		pico2Comm(body)
 	);
-	\end{lstlisting}
+	\end{rascal}
 
 
 \section{CSF generated implementation}
