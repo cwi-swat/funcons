@@ -1,0 +1,20 @@
+\noindent\begin{quote}
+\begin{rascal}
+data Expr 
+	= \data(Data dt)
+	| abs(Patt pattern, Comm command)
+	| application(Op op, list[Expr] exprs)
+	| assignVar(Expr var, Expr val)
+	| bound(Id id)
+	| deref(Expr var)
+	| derefIfVar(Expr var)
+	| env(Decl decl)
+	| newVar(Expr typeExpr)
+	| newVar(Type \type)
+	| op(list[Expr] expressions)
+	| tup(list[Expr] tuples)
+	| tupSeq(list[Expr] tuples)
+	| typed(Expr expr, Type check)
+	;
+\end{rascal}
+\end{quote}

@@ -1,0 +1,7 @@
+$pdflatex = 'pdflatex -shell-escape %B';
+
+@cus_dep_list = (@cus_dep_list, "rsctex ltx 1 compileRascalTex");
+
+sub compileRascalTex {
+ system("java -jar rascal.jar -latex $_[0].rsctex"); }
+

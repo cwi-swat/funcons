@@ -1,0 +1,4 @@
+*.ltx
+*.aux
+*.log
+*.*_latexmk

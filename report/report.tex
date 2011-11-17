@@ -17,6 +17,7 @@
 % lmodern has no smallcaps bold , so we replace it by computer-modern (closely
 % related)
 \DeclareFontShape{T1}{lmr}{bx}{sc} { <-> ssub * cmr/bx/sc }{}
+\usepackage[scaled=0.85]{beramono} % monospace font with bold support
 
 \title{Funcons in Rascal - report}
 \author{Davy Landman}
@@ -34,6 +35,8 @@
 
 \newcommand{\filename}[1]{\texttt{#1}\xspace}
 \newcommand{\code}[1]{\texttt{#1}\xspace}
+\usepackage{highlight}
+\usepackage{rascal}
 
 % todo marker
 \usepackage[svgnames]{xcolor}
@@ -107,24 +110,8 @@ implementations.
 		\ADT equivelant to the \SDF implementation.
 		Below is a snippet from this file.
 
-		\begin{lstlisting}
-data Expr 
-	= \data(Data dt)
-	| abs(Patt pattern, Comm command)
-	| application(Op op, list[Expr] exprs)
-	| assignVar(Expr var, Expr val)
-	| bound(Id id)
-	| deref(Expr var)
-	| derefIfVar(Expr var)
-	| env(Decl decl)
-	| newVar(Expr typeExpr)
-	| newVar(Type \type)
-	| op(list[Expr] expressions)
-	| tup(list[Expr] tuples)
-	| tupSeq(list[Expr] tuples)
-	| typed(Expr expr, Type check)
-	;
-		\end{lstlisting}
+		\input{adtextract.ltx}
+
 
 		\subsubsection{\code{Op} funcon}
 		The \code{Op} funcon causes the biggest difference in implementation, since
