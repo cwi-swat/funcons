@@ -40,7 +40,7 @@
 	\marginpar{%
 	\colorbox{yellow}{\parbox{0.9\marginparwidth}{%
 		\raggedright \footnotesize #1}}}}
-	
+
 \title{Funcons in Rascal - report}
 \author{Davy Landman}
 \begin{document}
@@ -154,7 +154,7 @@ implementations.
 		Below are two definitions, the first is for the loop command, and the
 		second is for the add expression.
 
-		\begin{rascal}
+\begin{rascal}
 public Comm pico2Comm(Statement::loop(con, body)) =
 	whileLoop( 
 		noteq(pico2Expr(con), natCon(0)), 
@@ -162,7 +162,7 @@ public Comm pico2Comm(Statement::loop(con, body)) =
 	);
 
 public Expr pico2Expr(add(lhs, rhs)) = intPlus(pico2Expr(lhs), pico2Expr(rhs));
-		\end{rascal}
+\end{rascal}
 
 		\subsubsection{Naming collisions}
 		In the example we see that the Patterns (pattern based invocation) use
