@@ -104,7 +104,8 @@ implementations.
 
 	\subsection{The funcons \ADT}
 		The \filename{src/funcons/funcons.rsc} file contains the complete funcons
-		\ADT equivelant to the \SDF implementation.
+		\ADT equivelant to the \SDF implementation\footnote{Since the minus
+		character is not allowed in \Rascal names, we used camel casing.}.
 		Below is a snippet from this file.
 
 		\input{adtextract.ltx}
@@ -146,15 +147,31 @@ implementations.
 		for that usage.
 	
 	\subsection{Semantic description using funcons}
-	
 
-	\begin{rascal}
+		The \filename{src/lang/pico/semantic/Main.rsc} file contains the semantic
+		description of the pico language, similar to the semantic description of
+		the pico language in \ASFSDF.
+		Below are two definitions, the first is for the loop command, and the
+		second is for the add expression.
+
+		\begin{rascal}
 public Comm pico2Comm(Statement::loop(con, body)) =
 	whileLoop( 
 		noteq(pico2Expr(con), natCon(0)), 
 		pico2Comm(body)
 	);
-	\end{rascal}
+
+public Expr pico2Expr(add(lhs, rhs)) = intPlus(pico2Expr(lhs), pico2Expr(rhs));
+		\end{rascal}
+
+		\subsubsection{Naming collisions}
+		In the example we see that the Patterns (pattern based invocation) use
+		the qualified name for a alternative, this is due to naming collisions
+		with the funcon names.
+		The \AST contains the \code{loop} alternative for the \code{Statement}
+		sort, but the \code{Comm} funcon also defines the \code{loop} funcon.
+		In most places \Rascal correctly handles these collisions, but at the
+		moment the patterns require fully qualified names to avoid collisions.
 
 
 \section{CSF generated implementation}
