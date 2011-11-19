@@ -141,7 +141,7 @@ implementations.
 		chaining when they cause no ambiguity.
 		\Rascal does not support implicit chaining, and this makes a funcon such
 		as \code{Expr[[ NatCon ]] = NatCon} in \ASF becomes
-		\code{\ldots = \irascal{data(int(nat(Nat::natCon(val))))}} in \Rascal.
+		\code{\ldots = \irascal{\data(\int(nat(Nat::natCon(val))))}} in \Rascal.
 		We can solve this with a rewrite rule, but it means that for each funcon
 		we have to determine where it is actually used and create a rewrite rule
 		for that usage.
