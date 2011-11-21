@@ -192,6 +192,26 @@ public Expr pico2Expr(add(lhs, rhs)) = intPlus(pico2Expr(lhs), pico2Expr(rhs));
 		In most places \Rascal correctly handles these collisions, but at the
 		moment the patterns require fully qualified names to avoid collisions.
 
+		\subsubsection{List deconstruction}
+		\todo{how is this called again?}
+		The only real elegance difference between the \Rascal semantic
+		description and the \ASFSDF description is caused by a current
+		limitation of rascal pattern matching to not allow to match an empty
+		list.
+		The following snippet demonstrates the required code needed to
+		destruct a list:
+
+\begin{rascal}
+public Comm pico2Comm(list[Statement] statements) =
+	(statements == [] ) ? skip() : seq([ pico2Comm(s) | s <- statements]);
+\end{rascal}
+
+		In a future version of \Rascal we would prefer to have support for the
+		empty list/set/map in the patterns for function parameters\footnote{Regular
+		patterns already support this}.
+		Instead of a head/tail deconstruction of the list we use a comprehension
+		to map the \AST to the correct funcons.
+
 
 \section{CSF generated implementation}
 
