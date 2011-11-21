@@ -212,6 +212,18 @@ public Comm pico2Comm(list[Statement] statements) =
 		Instead of a head/tail deconstruction of the list we use a comprehension
 		to map the \AST to the correct funcons.
 
+		\subsubsection{\AST instead of \CST}
+		For our implementation we chose to write the semantic definition against
+		the \AST of the pico language, instead of the \CST as the \ASFSDF
+		solution does.
+		However, this is not due to a limitation of \Rascal, below is a snippet
+		of how the \code{pico2Expr(add(lhs, rhs))} would look if written for the
+		\CST.
+
+\begin{rascal}
+public Expr pico2Expr((Expression)`<Expression lhs> + <Expression rhs>`) 
+	= intPlus(pico2Expr(lhs), pico2Expr(rhs));
+\end{rascal}
 
 \section{CSF generated implementation}
 
