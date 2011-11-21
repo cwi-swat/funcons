@@ -5,7 +5,7 @@ report.pdf: FORCE_MAKE
 	rubber-info --check report
 	rubber-info --boxes report
 
-final: report-final.pdf
+final: clean report-final.pdf
 	open report-final.pdf
 
 report-final.pdf: report_compiled.pdf
