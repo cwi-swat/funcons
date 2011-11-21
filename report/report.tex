@@ -108,7 +108,24 @@ implementations.
 		character is not allowed in \Rascal names, we used camel casing.}.
 		Below is a snippet from this file.
 
-		\input{adtextract.ltx}
+\begin{rascal}
+data Expr 
+	= \data(Data dt)
+	| abs(Patt pattern, Comm command)
+	| application(Op op, list[Expr] exprs)
+	| assignVar(Expr var, Expr val)
+	| bound(Id id)
+	| deref(Expr var)
+	| derefIfVar(Expr var)
+	| env(Decl decl)
+	| newVar(Expr typeExpr)
+	| newVar(Type \type)
+	| op(list[Expr] expressions)
+	| tup(list[Expr] tuples)
+	| tupSeq(list[Expr] tuples)
+	| typed(Expr expr, Type check)
+	;
+\end{rascal}
 		
 		\subsubsection{\code{Op} funcon}
 		The \code{Op} funcon causes the biggest difference in implementation, since
@@ -141,7 +158,7 @@ implementations.
 		chaining when they cause no ambiguity.
 		\Rascal does not support implicit chaining, and this makes a funcon such
 		as \code{Expr[[ NatCon ]] = NatCon} in \ASF becomes
-		\code{\ldots = \irascal{\data(\int(nat(Nat::natCon(val))))}} in \Rascal.
+		\code{\ldots = data(int(nat(Nat::natCon(val))))} in \Rascal.
 		We can solve this with a rewrite rule, but it means that for each funcon
 		we have to determine where it is actually used and create a rewrite rule
 		for that usage.
