@@ -27,11 +27,23 @@
 \newcommand{\CST}{\textsmaller{CST}\xspace}
 \newcommand{\ADT}{\textsmaller{ADT}\xspace}
 \newcommand{\ADTs}{\textsmaller{ADTs}\xspace}
+\newcommand{\MSOS}{\textsmaller{MSOS}\xspace}
 
 \newcommand{\filename}[1]{\texttt{#1}\xspace}
 \newcommand{\code}[1]{\texttt{#1}\xspace}
 \usepackage{highlight}
 \usepackage{rascal}
+\usepackage{listings}
+
+\lstset{% general command to set parameter(s) 
+	basicstyle=\ttfamily%
+}
+
+\lstdefinelanguage{CSF}%
+{%
+	keywords={Glossary, Alias },% 
+	moredelim=[s][\itshape]{$}{$}%
+}
 
 % todo marker
 \usepackage[svgnames]{xcolor}
@@ -226,6 +238,38 @@ public Expr pico2Expr((Expression)`<Expression lhs> + <Expression rhs>`)
 \end{rascal}
 
 \section{CSF generated implementation}
+	Since we have demonstrated that all the funcon concepts from \ASFSDF can be
+	translated to \Rascal, we explain in this section how we could use \Rascal
+	to generate the funcons based on the \CSF specifications.
+
+	\subsection{\CSF}
+	The \CSF file defines the funcon, it describes it in natural language and it
+	formalizes its semantics using \MSOS.
+	
+\lstset{language=CSF}
+\begin{lstlisting}
+Decl ::= decl(Comm)
+
+Glossary:
+
+This allows $Comm$ to be executed in a sequence of declarations,
+computing the empty environment.
+
+Alias:  declaration
+
+1:      Comm --> Comm'
+        ---
+        decl(Comm) --> decl(Comm')
+
+2:      decl(skip) --> map-empty
+
+3:      Comm ==> Comm'
+        ---
+        decl(Comm) ==> decl(Comm') : map-empty
+
+\end{lstlisting}
+
+
 
 \section{Limitations of rascal implementation}
 
