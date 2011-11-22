@@ -26,6 +26,7 @@
 \newcommand{\AST}{\textsmaller{AST}\xspace}
 \newcommand{\CST}{\textsmaller{CST}\xspace}
 \newcommand{\IDE}{\textsmaller{IDE}\xspace}
+\newcommand{\LOC}{\textsmaller{LOC}\xspace}
 \newcommand{\ADT}{\textsmaller{ADT}\xspace}
 \newcommand{\ADTs}{\textsmaller{ADTs}\xspace}
 \newcommand{\MSOS}{\textsmaller{MSOS}\xspace}
@@ -286,6 +287,16 @@ Alias:  declaration
 	a \CST onto a \AST, we defined the \AST for \CSF and used that \AST to
 	write our generator.
 	The \AST is defined in the \filename{src/csf2rascal/lang/csf/ast/Main.rsc} file.
+
+	\subsection{\Rascal funcons generation}
+	Similar to the \ASFSDF approach (\filename{CSF-to-SDF.asf}) we generate
+	\Rascal files from within \Rascal.
+	The \filename{src/csf2rascal/lang/csf/generation/Generate.rsc} file
+	implements this generation in 179 \LOC (blank lines excluded).
+
+	Unlike the manual implementation, the generated funcons have the same
+	modularity as the \ASFSDF implementation.
+	A user of the funcon can import just the needed funcons and read only those.
 
 
 \section{Limitations of rascal implementation}
