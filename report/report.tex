@@ -25,6 +25,7 @@
 \newcommand{\ASF}{\textsmaller{ASF}\xspace}
 \newcommand{\AST}{\textsmaller{AST}\xspace}
 \newcommand{\CST}{\textsmaller{CST}\xspace}
+\newcommand{\IDE}{\textsmaller{IDE}\xspace}
 \newcommand{\ADT}{\textsmaller{ADT}\xspace}
 \newcommand{\ADTs}{\textsmaller{ADTs}\xspace}
 \newcommand{\MSOS}{\textsmaller{MSOS}\xspace}
@@ -248,6 +249,9 @@ public Expr pico2Expr(`<Expression lhs> + <Expression rhs>`)
 	\subsection{\CSF}
 	The \CSF file defines the funcon, it describes it in natural language and it
 	formalizes its semantics using \MSOS.
+	Below is the definition of the \code{decl} funcon.
+	We see that the funcon is part of the \code{Decl} funcons and takes a
+	\code{Comm} as parameter.
 	
 \begin{lstlisting}[language=CSF]
 Decl ::= decl(Comm)
@@ -271,6 +275,17 @@ Alias:  declaration
 
 \end{lstlisting}
 
+	We rewrote the \SDF grammar definition to a \Rascal grammar definition, this
+	grammar is located in the
+	\filename{src/csf2rascal/lang/csf/cst/MainCSFGrammar.rsc} file.
+	The only real difference is that we marked the words such as ``Glossary'' as
+	keywords, this is important for disambiguation and provides the \IDE with
+	information for simple highlighting.
+
+	Since \Rascal provides the \code{implode} function which automatically maps
+	a \CST onto a \AST, we defined the \AST for \CSF and used that \AST to
+	write our generator.
+	The \AST is defined in the \filename{src/csf2rascal/lang/csf/ast/Main.rsc} file.
 
 
 \section{Limitations of rascal implementation}
