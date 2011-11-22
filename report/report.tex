@@ -292,11 +292,20 @@ Alias:  declaration
 	Similar to the \ASFSDF approach (\filename{CSF-to-SDF.asf}) we generate
 	\Rascal files from within \Rascal.
 	The \filename{src/csf2rascal/lang/csf/generation/Generate.rsc} file
-	implements this generation in 179 \LOC (blank lines excluded).
+	implements this generation in 249 \LOC (blank lines excluded).
 
 	Unlike the manual implementation, the generated funcons have the same
 	modularity as the \ASFSDF implementation.
 	A user of the funcon can import just the needed funcons and read only those.
+
+	\subsubsection{Extra features}
+	We have added a few extra features in comparison to the \ASFSDF generation.
+	
+	\begin{itemize}
+		\item Support for the aliassed funcon names.
+		\item Informal description of funcon is included as documentation per
+		funcon (using \Rascal's \code{@doc\{\}} source code annotation) .
+	\end{itemize}
 
 
 \section{Limitations of rascal implementation}
