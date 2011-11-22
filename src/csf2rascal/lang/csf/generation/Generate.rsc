@@ -105,8 +105,8 @@ private str changeConstructorName(str consOld, str consNew) {
 
 private str removeTypes(str rascalConstructor) {
 	return visit (rascalConstructor) {
-		case /[A-Z][A-Za-z\-]* <v:[a-z][A-Za-z\-0-9]*>/ => v
-		case /list\[[^\]]*\] <v:[a-z][A-Za-z\-0-9]*>/ => v
+		case /[A-Z][A-Za-z\-]* <v:[a-z\\][A-Za-z\-0-9]*>/ => v
+		case /list\[[^\]]*\] <v:[a-z\\][A-Za-z\-0-9]*>/ => v
 	}; 
 }
 
