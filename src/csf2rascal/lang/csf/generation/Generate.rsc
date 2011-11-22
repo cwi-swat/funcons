@@ -118,11 +118,16 @@ private Alternative getAlternativeOtherName(Alternative alt, str newName) {
 	return alt;
 }
 
+private str getImplicitImport(sortParams(s, param, _), loc basePath, str currentSort) {
+	return getImplicitImport(nameParams("",[s, param]), basePath, currentSort);
+}
+
+
 private str getImplicitImport(nameParams(_, params), loc basePath, str currentSort) { 
 	paramsToInclude = toSet(params - [currentSort]);
 	if (isEmpty(paramsToInclude))
 		return "";
-	return intercalate("\n", ["import <moduleName(basePath, Notation::sort(p))>;" | p <- paramsToInclude]); 
+	return intercalate("\n", ["import <moduleName(basePath, Notation::sort(p))>;" | p <- paramsToInclude]) + "\n"; 
 }
 
 private str getImplicitImport(nameParams(_, param, _), loc basePath, str currentSort) { 
