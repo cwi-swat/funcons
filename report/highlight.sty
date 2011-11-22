@@ -1,5 +1,6 @@
 
 \ProvidesPackage{highlight}
+\RequirePackage{textcomp}
 
 \def\KW#1{\textbf{#1}}
 \def\STR#1{\texttt{#1}}
@@ -8,4 +9,4 @@
 \def\TAB{\hspace*{4ex}}
 \def\SPACE{\ }
 \def\MATH#1{\ensuremath{#1}}
-\def\BACKTICK{\ensuremath{\backprime}}
+\def\BACKTICK#1{\textasciigrave\texttt{#1}\textasciigrave}

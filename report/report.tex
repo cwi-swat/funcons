@@ -234,7 +234,7 @@ public Comm pico2Comm(list[Statement] statements) =
 		\CST.
 
 \begin{rascal}
-public Expr pico2Expr((Expression)`<Expression lhs> + <Expression rhs>`) 
+public Expr pico2Expr(`<Expression lhs> + <Expression rhs>`) 
 	= intPlus(pico2Expr(lhs), pico2Expr(rhs));
 \end{rascal}
 
@@ -247,8 +247,7 @@ public Expr pico2Expr((Expression)`<Expression lhs> + <Expression rhs>`)
 	The \CSF file defines the funcon, it describes it in natural language and it
 	formalizes its semantics using \MSOS.
 	
-\lstset{language=CSF}
-\begin{lstlisting}
+\begin{lstlisting}[language=CSF]
 Decl ::= decl(Comm)
 
 Glossary:
