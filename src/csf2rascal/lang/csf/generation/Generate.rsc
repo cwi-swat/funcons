@@ -56,6 +56,41 @@ private void generateUnDefinedSorts(set[str] undefinedSorts, loc basePath) {
 	}
 }
 
+private str generateDocs(list[Text] text) {
+	str result = "@doc{";
+	int lineSize = size(result);
+	int lineMax = 80;
+	for (t <- text) {
+		str newStr = "";
+		switch(t) {
+			case term(te) : newStr = " " + generateDocs(te.atoms);
+			case word(w) : newStr = " " + w;
+			case punctuation(p) : newStr = p;
+		}
+		result += newStr;
+		lineSize += size(newStr);
+		if (lineSize > lineMax || endsWith(newStr,".")) {
+			result += "\n";
+			lineSize = 0;
+		}
+	}
+	result += "}\n";
+	return replaceAll(replaceAll(result,"{ ", "{"), "\n}\n", "}\n");
+}
+
+private str generateDocs(list[Atom] atoms) {
+	res = for (a <- atoms) {
+		switch(a) {
+			case variable(v) : append v;
+			case constant(c) : append ( (c.nat?) ? "<c.nat>" : c.\str);
+			case name(n) : append n;
+			case symbol(s) : append s;
+			case terms(tms) : append for (t <- tms) append generateDocs(t.atoms);
+		}
+	};
+	return intercalate("", res);
+}
+
 private void generateSingleCSFFile(csf(s:sort(sortName), list[Item] items), loc basePath) {
 	list[str] names = getModuleParts(s);
 	loc fileName = (basePath | it + n | n <- names)[extension="rsc"];
@@ -64,7 +99,9 @@ private void generateSingleCSFFile(csf(s:sort(sortName), list[Item] items), loc 
 		mkDirectory(fileName.parent);
 	}
 	writeFile(fileName, "module <moduleName(basePath, s)>
-		'
+		'<if (/glossary(t) := items){> 
+			'<generateDocs(t)> 
+		'<}>
 		'data <sortName>;
 		'<if (/aliasSort(s) := items) {>
 			'alias <s> = <sortName>;
@@ -85,6 +122,9 @@ private void generateSingleCSFFile(csf(s:sortAlternative(sortName, alt), list[It
 		'
 		'extend <moduleName(basePath, Notation::sort(sortName))>;
 		'<getImplicitImport(alt, basePath, sortName)>
+		'<if (/glossary(t) := items){> 
+			'<generateDocs(t)> 
+		'<}>
 		'data <sortName> = <const>;
 		'<if (/aliasName(n) := items) {>
 			'public <sortName> <changeConstructorName(const, getAlternativeConstructor(getAlternativeOtherName(alt, n)))> = 
