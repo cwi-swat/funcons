@@ -66,6 +66,9 @@ private void generateSingleCSFFile(csf(s:sort(sortName), list[Item] items), loc 
 	writeFile(fileName, "module <moduleName(basePath, s)>
 		'
 		'data <sortName>;
+		'<if (/aliasSort(s) := items) {>
+			'alias <s> = <sortName>;
+		'<}>
 		"
 	);
 }
@@ -77,13 +80,42 @@ private void generateSingleCSFFile(csf(s:sortAlternative(sortName, alt), list[It
 	if (!exists(fileName.parent)) {
 		mkDirectory(fileName.parent);
 	}
+	str const = getAlternativeConstructor(alt);
 	writeFile(fileName, "module <moduleName(basePath, s)>
 		'
 		'extend <moduleName(basePath, Notation::sort(sortName))>;
 		'<getImplicitImport(alt, basePath, sortName)>
-		'data <sortName> = <getAlternativeConstructor(alt)>;
+		'data <sortName> = <const>;
+		'<if (/aliasName(n) := items) {>
+			'public <sortName> <changeConstructorName(const, getAlternativeConstructor(getAlternativeOtherName(alt, n)))> = 
+			'	<removeTypes(const)>;
+		'<}>
 		"
 	);
+}
+
+private str changeConstructorName(str consOld, str consNew) {
+	if (/^[^\(]+\(<rest:.*>$/ := consOld) {
+		if (/^<pre:[^\(]+>\(/ := consNew) {
+			return "<pre>(<rest>";
+		}
+	}
+	return consNew;
+}
+
+private str removeTypes(str rascalConstructor) {
+	return visit (rascalConstructor) {
+		case /[A-Z][A-Za-z\-]* <v:[a-z][A-Za-z\-0-9]*>/ => v
+		case /list\[[^\]]*\] <v:[a-z][A-Za-z\-0-9]*>/ => v
+	}; 
+}
+
+private Alternative getAlternativeOtherName(Alternative alt, str newName) {
+	if (alt.name ?)
+		return alt[name = newName];
+	else if (alt.sort ?)
+		return alt[sort = newName];
+	return alt;
 }
 
 private str getImplicitImport(nameParams(_, params), loc basePath, str currentSort) { 
