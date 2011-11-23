@@ -77,21 +77,23 @@ of the \Rascal implementation.
 \section{The architecture}
 	\subsection{\ASFSDF}
 		In \ASFSDF the funcons are implemented in a two stage approach.
-		The first stage is `compiling' the \CSF~(funcons specifications) into
+		The first stage is translating the \CSF~(funcon specification files) into
 		\SDF definitions.
-		These definitions can then be used to describe the semantics of a
+		These definitions are used to describe the semantics of a
 		programming language.
-		These funcon semantics are connected to syntax of the programming
+		The funcons (represented as \SDF alternatives) are connected to syntax of the programming
 		language using the \ASF equations.
 
 		\paragraph{Current limitations:}
 			At the time of writing, not all funcons are specified in \CSF,
-			which means that not all the \SDF defined funcons were generated
+			which means that not all \SDF defined funcons were generated
 			from the \CSF specifications. 
 			Moreover, the \CSF specifications contain the descriptions of how to
 			`interpret' a funcon, but the generation of an interpreter was not yet
 			implemented. 
 			\todo{mention MSOS etc?}
+			\todo{interpret is incorrect word, should check MSOS papers for
+			better term}
 		
 
 	\subsection{\Rascal}
