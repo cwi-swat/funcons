@@ -1,20 +1,18 @@
 module testcrash
 
-layout JustSpaces = [\ ]*;
+import IO;
 
-//lexical Syms = "---" !<< [+\-]+ !>> [+\-];
-lexical Syms = [+\-] ([+\-] ([+] [+\-]*)?)? !>> [+\-];
+data T = f(int x) | g(str y);
+data T2 = f(int x, str s);
 
-lexical Sep = "---" "-"*;
+public void stuff(f(x)) {
+	println(x);
+}
 
-lexical Vars = [a-z];
+public void stuff(g(y)) {
+	println(y);
+}
 
-syntax S 
-	= F  f 
-	| F f Sep Vars v
-	;
-
-syntax F 
-	= Vars v 
-	| F lhs Syms s F rhs
-	;
+public default void stuff(T t) {
+	println("default?");
+}
