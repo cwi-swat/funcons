@@ -330,8 +330,32 @@ public Decl declaration(Comm comm) =
 	see that they are the same.
 	Therefore the semantic description would be equal.
 
-\section{Limitations of rascal implementation}
+\section{Limitations of \Rascal implementation}
+This section will provide a list of the limitations we found for implementing
+the funcons in \Rascal.
 
-\section{Advantages of rascal implementaton}
+\begin{enumerate}
+	\newcommand{\limit}[2]{\item \textbf{#1,} #2}
+	\limit
+		{No implicit chains in the \ADTs}
+		{this imposes either a challenge for the \CSF to \Rascal generator or
+		the user of the funcons.
+		We suggest that with some smart work in the \Rascal generator this
+		problem can be solved.
+		}
+
+	\limit
+		{Naming collisions}
+		{in the current version some naming collisions could cause confusions
+		for the funcons user.
+		We aim to improve these naming collisions and provide better error
+		messages.
+		These efforts are connected to our project in adding a static type
+		checker.
+		}
+	
+\end{enumerate}
+
+\section{Advantages of \Rascal implementaton}
 
 \end{document}
