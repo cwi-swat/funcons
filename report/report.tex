@@ -315,6 +315,20 @@ data Decl = decl(Comm comm);
 public Decl declaration(Comm comm) = 
 	decl(comm);
 \end{rascal}
+	
+	\paragraph{Limitations:}
+	We have not solved the problems caused by the explicit production chains
+	since we cannot translate all the funcons automatically.
+	Moreover, since the \code{Op} funcon was not described in a \CSF
+	specification, we have not generated rewrite rules to allow easier usage of
+	these funcons.
+
+	\subsection{Semantic description using generated funcons}
+	Since we cannot generate all the funcons from \CSF files we have no semantic
+	description of the Pico language using these funcons.
+	Moreover, when manually comparing the generated \ADT with the manual \ADT we
+	see that they are the same.
+	Therefore the semantic description would be equal.
 
 \section{Limitations of rascal implementation}
 
