@@ -296,17 +296,25 @@ Alias:  declaration
 
 	Unlike the manual implementation, the generated funcons have the same
 	modularity as the \ASFSDF implementation.
-	A user of the funcon can import just the needed funcons and read only those.
+	A user of the funcon can import just the needed funcons.
+	We have added a few small features in comparison to the \ASFSDF generation.
+	We added support for the aliased funcons, and we used \Rascal's
+	\code{@doc\{\}} source code annotations to add the informal description of a
+	funcon.
 
-	\subsubsection{Extra features}
-	We have added a few extra features in comparison to the \ASFSDF generation.
-	
-	\begin{itemize}
-		\item Support for the aliassed funcon names.
-		\item Informal description of funcon is included as documentation per
-		funcon (using \Rascal's \code{@doc\{\}} source code annotation) .
-	\end{itemize}
+	Below is the \Rascal implementation of the above \CSF file.
 
+\begin{rascal}
+extend csf2rascal::generated::Decl::Decl;
+import csf2rascal::generated::Comm::Comm;
+ 
+@doc{This allows Comm to be executed in a sequence of declarations, computing the
+ empty environment.}
+data Decl = decl(Comm comm);
+
+public Decl declaration(Comm comm) = 
+	decl(comm);
+\end{rascal}
 
 \section{Limitations of rascal implementation}
 
