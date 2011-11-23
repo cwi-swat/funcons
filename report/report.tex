@@ -356,6 +356,47 @@ the funcons in \Rascal.
 	
 \end{enumerate}
 
-\section{Advantages of \Rascal implementaton}
+\section{Advantages of \Rascal implementation}
 
+This section will provide a list of the advantages we found and envision for implementing
+the funcons in \Rascal.
+
+\begin{enumerate}
+	\newcommand{\advantage}[2]{\item \textbf{#1,} #2}
+
+	\advantage
+		{Simpler generator}
+		{
+			since one of \Rascal's aims is to support code generation, there are
+			more concepts built into the language than available in \ASFSDF.
+			Moreover, \Rascal includes has native support for regular
+			expressions and has an extensive library for common string
+			operations.
+		}
+
+	\advantage
+		{Simple \CST to \AST transformation}
+		{
+			to avoid repeating the syntactical concepts of \CSF, or the language
+			parsed, \Rascal offers a simple way to implode the \CST to a \AST.
+			This create better maintainable code without the extra maintenance
+			of this transformation.
+		}
+
+	\advantage
+		{Eclipse \IDE}
+		{
+			\Rascal takes advantage of many features of the Eclipse \IDE, this
+			implies that it is easy to provide the users of funcons with a rich
+			user experience.
+		}
+
+	\advantage
+		{Writing the interpreter in \Rascal}
+		{
+			it would be possible to write the funcons interpreter using \Rascal.
+			For a example of the possibilities see the
+			\filename{std/library/demo/lang/MissGrant/} folder.
+		}
+\end{enumerate}
 \end{document}
