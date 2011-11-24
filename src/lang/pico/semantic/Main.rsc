@@ -12,9 +12,9 @@ public Prog pico2Prog(Program::program(list[IdType] decls, list[Statement] body)
 		pico2Comm(body)
 	)));
 
-	
-public Decl pico2Decl(list[IdType] decls) =
-	(decls == []) ? decl(skip()) : seq([ pico2Decl(d) | d <- decls]);
+public Decl pico2Decl([]) = decl(skip());
+
+public Decl pico2Decl([decls*]) = seq([ pico2Decl(d) | d <- decls]);
 	
 public Decl pico2Decl(idtype(str id, Type tp)) = 
 	bind( 
@@ -23,9 +23,9 @@ public Decl pico2Decl(idtype(str id, Type tp)) =
 	);
 
 
-public Comm pico2Comm(list[Statement] statements) =
-	(statements == [] ) ? skip() : seq([ pico2Comm(s) | s <- statements]);
+public Comm pico2Comm([]) = skip();
 
+public Comm pico2Comm([statements*]) = seq([ pico2Comm(s) | s <- statements]);
 
 public Comm pico2Comm(Statement::cond(con, thenPart, elsePart)) =
 	cond(
