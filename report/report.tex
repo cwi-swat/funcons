@@ -16,7 +16,7 @@
 % lmodern has no smallcaps bold , so we replace it by computer-modern (closely
 % related)
 \DeclareFontShape{T1}{lmr}{bx}{sc} { <-> ssub * cmr/bx/sc }{}
-\usepackage[scaled=0.8]{beramono} % monospace font with bold support
+\usepackage[scaled=0.75]{beramono} % monospace font with bold support
 
 
 % nicely formatted acronyms 
@@ -264,7 +264,7 @@ Alias:  declaration
 \end{lstlisting}
 
 	We rewrote the \SDF grammar definition in \Rascal, this grammar can be found in the
-	\filename{src/csf2rascal/lang/csf/cst/MainCSFGrammar.rsc} file.
+	\filename{src/csf2rascal/\-lang/csf/\-cst/MainCSFGrammar.rsc} file.
 	The only real difference is that we marked the words such as ``Glossary'' as
 	keywords, this is important for disambiguation and provides the \IDE with
 	information for simple highlighting.
@@ -277,7 +277,7 @@ Alias:  declaration
 	\subsection{\Rascal funcons generation}
 	Similar to the \ASFSDF approach (\filename{CSF-to-SDF.asf}) we generate
 	\Rascal files using \Rascal.
-	The \filename{src/csf2rascal/lang/csf/generation/Generate.rsc} file
+	The \filename{src/\-csf2\-rascal/\-lang/\-csf/generation/Generate.rsc} file
 	implements this generation in 249 \LOC (blank lines excluded).
 
 	Unlike the manual implementation, the generated funcons have the same
