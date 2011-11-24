@@ -290,7 +290,9 @@ Alias:  declaration
 
 	Below is the \Rascal implementation of the above \CSF file.
 
-\begin{rascal}
+\begin{rascalModule}
+module csf2rascal::generated::Decl::decl_Comm::decl
+
 extend csf2rascal::generated::Decl::Decl;
 import csf2rascal::generated::Comm::Comm;
  
@@ -300,7 +302,7 @@ data Decl = decl(Comm comm);
 
 public Decl declaration(Comm comm) = 
 	decl(comm);
-\end{rascal}
+\end{rascalModule}
 	
 	\paragraph{Limitations:}
 	We have not solved the problems caused by the explicit production chains
