@@ -23,7 +23,7 @@ lexical Name = ([a-z] [a-z\-]* !>> [a-z\-]) \ FormulaKeywords; // the lower case
 // we have to make sure the Symbol will not be ambigui with Infer, therefore we do the repeated character classes with the third missing the -
 lexical Symbol = ([=\<\>|\-:] ([=\<\>|\-:] ([=\<\>|:] [=\<\>|\-:]*)?)? !>> [=\<\>|\-:]) \ "="; // remove the single = as a possible match to avoid ambiguity with Equation
 	
-lexical Infer = "---" "-"* !>> "-"; // prefer in sdf??
+lexical Infer = "---" "-"* !>> "-";
 
 
 // To avoid ambiguities caused by Sort + Symbol (Part+) matching stuff like "Alias:"
@@ -67,10 +67,10 @@ syntax Definition
 	= single: Sort lhs "=" Sort rhs
 	| alternative: Sort lhs "=" Sort rhs "\\" Alternative alt;
 	
-syntax Part // in sdf only parts alternative may have layout, the others should be lexical
+syntax Part // in sdf only parts alternative may have layout, the others were be lexical, this is not possible in rascal 
 	= parts: "(" {Part ","}+ parts ")"
 	| variable: Variable variable 
-	| variable: "_" Variable variable "_" // perhaps need to distinguish between these?
+	| variable: "_" Variable variable "_" 
 	| symbol: Symbol symbol
 	| symbol: "_" Symbol symbol "_";
 
@@ -92,12 +92,12 @@ lexical Label = [0-9]+ [:];
 syntax Formula
 	= relation: Relation relation
 	| equation: Equation eq
-	| definition: "def" Term term // avoid in sdf??
-	| negation: "not" Formula formula; // avoid in sdf?
+	| definition: "def" Term term
+	| negation: "not" Formula formula;
 	
 syntax Relation = term: Term term;
 
-syntax Equation = equation: Term lhs "=" !>> [=\<\>|\-:] Term rhs; // follow restriction is not in SDF?
+syntax Equation = equation: Term lhs "=" !>> [=\<\>|\-:] Term rhs;
 	
 syntax Term = term: Atom+ atoms;
 
