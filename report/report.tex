@@ -66,12 +66,10 @@
 \begin{document}
 \maketitle
 
-\todo{Perhaps include a short table with terms?}
-
 \section*{Introduction}
 This document will describe the translation from the \ASFSDF funcons
 implementation to a \Rascal implementation.
-The first section will summarize the overall architecture, the second section
+The first section will summarize the overall architecture of this implementation, the second section
 will describe the manual translation to \Rascal, the third an automatic generation
 approach and the last two sections will discuss the limitations and advantages
 of the \Rascal implementation.
@@ -84,19 +82,16 @@ of the \Rascal implementation.
 		\SDF definitions.
 		These definitions are used to describe the semantics of a
 		programming language.
-		The funcons (represented as \SDF alternatives) are connected to syntax of the programming
-		language using the \ASF equations.
+		The funcons (represented as \SDF alternatives) are connected to the syntax of the programming
+		language using \ASF equations.
 
 		\paragraph{Current limitations:}
 			At the time of writing, not all funcons are specified in \CSF,
-			which means that not all \SDF defined funcons were generated
+			which means that not all \SDF defined funcons could be generated
 			from the \CSF specifications. 
 			Moreover, the \CSF specifications contain the descriptions of how to
-			`interpret' a funcon, but the generation of an interpreter was not yet
+			`execute' a funcon, but the generation of an interpreter was not yet
 			implemented. 
-			\todo{mention MSOS etc?}
-			\todo{interpret is incorrect word, should check MSOS papers for
-			better term}
 		
 
 	\subsection{\Rascal}
@@ -107,10 +102,10 @@ of the \Rascal implementation.
 
 		The first stage is similar, \Rascal also uses \CSF to generate the
 		funcon specifications.
-		However, since \Rascal has functions and \ADTs we do not generate 
-		funcons as language specifications but we generate \Rascal files containing
+		However, since \Rascal has functions and \ADTs we do not have to generate 
+		funcons as language specifications containing a syntax rule but we generate \Rascal files containing
 		funcons as a \ADT structure.
-		These funcons \ADTs can then be used to define the semantics of a
+		These funcon \ADTs can then be used to define the semantics of a
 		programming language in a similar fashion as in \ASFSDF.
 
 		\paragraph{Current limitations:}
@@ -128,7 +123,8 @@ of the \Rascal implementation.
 		\ADT equivalent to the \SDF implementation\footnote{Since the minus
 		character is not allowed in \Rascal names, we used camel casing.}.
 		Below is a snippet from this file, which shows the \CSF \code{Expr}
-		sort.
+		sort\footnote{The constructor \code{data} and the parameter \code{type} are escaped
+		since they are \Rascal keywords.}.
 
 \begin{rascal}
 data Expr 
@@ -163,12 +159,12 @@ data Expr
 		We could solve this by adding the \code{int-plus} (and all the others)
 		to the \code{Data} and \code{Expr} sorts and the \code{Op} sort, but this would
 		pollute our \ADT definition.
-		So we chose to only add \code{int-plus} to the \code{Op} sort and add a
+		So we chose to only add \code{int-plus} to the \code{Op} sort and add an
 		\code{application} alternative to the \code{Data} and \code{Expr} sorts.
 		This would mean we would have to write the first example as:
 		\irascal{application(intPlus(), [Expr(EXP1), Expr(EXP2)])}.
 
-		However, \Rascal's rewrite rules allows us to write 
+		However, \Rascal's pattern based invocation allows us to write 
 		\irascal{intPlus(Expr(EXP1), Expr(EXP2))}.
 		It is important to note that we assume to know the amount of parameter
 		used by the funcon, else we would have to wrap the parameters
@@ -229,8 +225,8 @@ public Expr pico2Expr(`<Expression lhs> + <Expression rhs>`)
 \end{rascal}
 
 \section{CSF generated implementation}
-	We have demonstrated that all the funcon concepts from \ASFSDF can be
-	translated to \Rascal in the previous section.
+	We have demonstrated, in the previous section, that all the funcon concepts
+	from the funcon specifications in \ASFSDF can be translated to \Rascal.
 	We will now explain how we could use \Rascal to generate the funcons from
 	the \CSF specifications.
 
@@ -370,7 +366,7 @@ the funcons in \Rascal.
 		{
 			to avoid repeating the syntactical concepts of \CSF, or the language
 			parsed, \Rascal offers a simple way to implode the \CST to a \AST.
-			This create better maintainable code without the extra maintenance
+			This creates better maintainable code without the extra maintenance
 			of this transformation.
 		}
 
